@@ -1,5 +1,5 @@
 [package]
-name = "ovgu-mensa"
+name = "ovgu-canteen"
 version = "0.1.0"
 authors = ["Fin Christensen <christensen.fin@gmail.com>"]
 
