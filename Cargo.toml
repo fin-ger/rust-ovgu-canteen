@@ -1,0 +1,14 @@
+[package]
+name = "ovgu-mensa"
+version = "0.1.0"
+authors = ["Fin Christensen <christensen.fin@gmail.com>"]
+
+[dependencies]
+html5ever = "*"
+scraper = "*"
+hyper = "*"
+hyper-native-tls = "*"
+chrono = "*"
+serde = "*"
+serde_derive = "*"
+serde_json = "*"
