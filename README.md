@@ -12,3 +12,9 @@
 ## Overview
 
 > TBD
+
+### Current example usage
+
+```
+cargo run | jq -r '.[0].meals[0].price.student'
+```

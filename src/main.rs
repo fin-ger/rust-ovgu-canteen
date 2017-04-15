@@ -9,6 +9,7 @@ extern crate chrono;
 extern crate serde;
 extern crate serde_json;
 
+use chrono::Datelike;
 use std::io::Read;
 use std::str::FromStr;
 
@@ -24,8 +25,9 @@ macro_rules! ovgu_mensa_unten {
     () => ( concat!(ovgu_mensa!(), "mensa-unicampus/speiseplan-unten/") )
 }
 
-#[derive(Debug)]
-enum Symbol {
+#[derive(Serialize, Deserialize, Debug)]
+enum Symbol
+{
     Pig,
     Cattle,
     Poultry,
@@ -42,10 +44,13 @@ enum Symbol {
     AnimalWelfare,
 }
 
-impl FromStr for Symbol {
+impl FromStr for Symbol
+{
     type Err = String;
-    fn from_str(s: &str) -> Result<Self, String> {
-        match s {
+    fn from_str(s: &str) -> Result<Self, String>
+    {
+        match s
+        {
             "Symbol Schwein" => Ok(Symbol::Pig),
             "Symbol Rind" => Ok(Symbol::Cattle),
             "Symbol Geflügel" => Ok(Symbol::Poultry),
@@ -65,8 +70,9 @@ impl FromStr for Symbol {
     }
 }
 
-#[derive(Debug)]
-enum Additive {
+#[derive(Serialize, Deserialize, Debug)]
+enum Additive
+{
     FoodColoring,
     FoodPreservatives,
     AntiOxidants,
@@ -79,10 +85,13 @@ enum Additive {
     Phenylalanine,
 }
 
-impl FromStr for Additive {
+impl FromStr for Additive
+{
     type Err = String;
-    fn from_str(s: &str) -> Result<Self, String> {
-        match s {
+    fn from_str(s: &str) -> Result<Self, String>
+    {
+        match s
+        {
             "(1)" => Ok(Additive::FoodColoring),
             "(2)" => Ok(Additive::FoodPreservatives),
             "(3)" => Ok(Additive::AntiOxidants),
@@ -98,8 +107,9 @@ impl FromStr for Additive {
     }
 }
 
-#[derive(Debug)]
-enum Allergenic {
+#[derive(Serialize, Deserialize, Debug)]
+enum Allergenic
+{
     Wheat,
     Rye,
     Barley,
@@ -129,10 +139,13 @@ enum Allergenic {
     Mollusc,
 }
 
-impl FromStr for Allergenic {
+impl FromStr for Allergenic
+{
     type Err = String;
-    fn from_str(s: &str) -> Result<Self, String> {
-        match s {
+    fn from_str(s: &str) -> Result<Self, String>
+    {
+        match s
+        {
             "(a1)" => Ok(Allergenic::Wheat),
             "(a2)" => Ok(Allergenic::Rye),
             "(a3)" => Ok(Allergenic::Barley),
@@ -165,43 +178,36 @@ impl FromStr for Allergenic {
     }
 }
 
-#[derive(Debug)]
-struct Price {
+#[derive(Serialize, Deserialize, Debug)]
+struct Price
+{
     student: f32,
     staff: f32,
     guest: f32,
 }
 
-fn f32_from_split<'a>(context: &'a str, split: Option<&'a str>) -> Result<f32, String> {
-    match split {
-        Some(num) => {
-            match num.parse() {
-                Ok(v) => Ok(v),
-                Err(..) => Err(format!("Failed to parse {} '{}'!", context, num)),
-            }
-        }
-        None => Err(format!("Cannot find {}!", context)),
-    }
-}
-
-impl FromStr for Price {
+impl FromStr for Price
+{
     type Err = String;
-    fn from_str(s: &str) -> Result<Self, String> {
+    fn from_str(s: &str) -> Result<Self, String>
+    {
         let replaced = str::replace(s, ",", ".");
         let mut split = replaced.split(" | ");
-        let (student, staff, guest): (f32, f32, f32);
-        student = match f32_from_split("student price", split.next()) {
-            Ok(v) => v,
-            Err(e) => return Err(e),
-        };
-        staff = match f32_from_split("staff price", split.next()) {
-            Ok(v) => v,
-            Err(e) => return Err(e),
-        };
-        guest = match f32_from_split("guest price", split.next()) {
-            Ok(v) => v,
-            Err(e) => return Err(e),
-        };
+
+        let student = split.next()
+            .ok_or("Cannot find student price!")
+            .and_then(|num| num.parse().map_err(|_| "Failed to parse student price!"))
+            ?;
+
+        let staff = split.next()
+            .ok_or("Cannot find staff price!")
+            .and_then(|num| num.parse().map_err(|_| "Failed to parse staff price!"))
+            ?;
+
+        let guest = split.next()
+            .ok_or("Cannot find guest price!")
+            .and_then(|num| num.parse().map_err(|_| "Failed to parse guest price!"))
+            ?;
 
         Ok(Price {
             student: student,
@@ -211,29 +217,106 @@ impl FromStr for Price {
     }
 }
 
-#[derive(Debug)]
-struct Meal<'a> {
-    name: &'a str,
+#[derive(Serialize, Deserialize, Debug)]
+struct Meal
+{
+    name: String,
     price: Price,
     symbols: Vec<Symbol>,
     additives: Vec<Additive>,
     allergenics: Vec<Allergenic>,
 }
 
-#[derive(Debug)]
-struct Day<'a> {
-    date: chrono::NaiveDate,
-    meals: Vec<Meal<'a>>,
-    side_dishes: Vec<&'a str>,
+#[derive(Serialize, Deserialize, Debug)]
+struct Day
+{
+    date: NaiveDateSerde,
+    meals: Vec<Meal>,
+    side_dishes: Vec<String>,
 }
 
-fn main() {
+struct NaiveDateVisitor {}
+
+impl NaiveDateVisitor
+{
+    fn new() -> Self
+    {
+        NaiveDateVisitor {}
+    }
+}
+
+#[derive(Debug)]
+struct NaiveDateSerde(chrono::NaiveDate);
+
+impl serde::Deserialize for NaiveDateSerde
+{
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+        where D: serde::Deserializer
+    {
+        deserializer.deserialize_i32(NaiveDateVisitor::new())
+    }
+}
+
+impl serde::Serialize for NaiveDateSerde
+{
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where S: serde::Serializer
+    {
+        serializer.serialize_i32(self.num_days_from_ce())
+    }
+}
+
+impl serde::de::Visitor for NaiveDateVisitor
+{
+    type Value = NaiveDateSerde;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result
+    {
+        formatter.write_str(concat!(
+            "an i32 integer describing a date with the number ",
+            "of days since 0001-01-01 in the proleptic Gregorian calendar"
+        ))
+    }
+
+    fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E>
+        where E: serde::de::Error
+    {
+        match chrono::NaiveDate::from_num_days_from_ce_opt(v)
+        {
+            Some(d) => Ok(NaiveDateSerde(d)),
+            None =>
+            {
+                let unexpected = serde::de::Unexpected::Signed(v as i64);
+                Err(serde::de::Error::invalid_value(unexpected, &self))
+            }
+        }
+    }
+
+    fn visit_unit<E>(self) -> Result<Self::Value, E>
+        where E: serde::de::Error
+    {
+        Ok(NaiveDateSerde(chrono::NaiveDate::from_num_days_from_ce(1)))
+    }
+}
+
+impl std::ops::Deref for NaiveDateSerde
+{
+    type Target = chrono::NaiveDate;
+    fn deref(&self) -> &Self::Target
+    {
+        &self.0
+    }
+}
+
+fn main()
+{
     let ssl = hyper_native_tls::NativeTlsClient::new().expect("Cannot create TLS client!");
     let connector = hyper::net::HttpsConnector::new(ssl);
     let client = hyper::Client::with_connector(connector);
     let mut body = String::new();
-    let mut response =
-        client.get(ovgu_mensa_unten!()).send().expect("OVGU website is unreachable!");
+    let mut response = client.get(ovgu_mensa_unten!())
+        .send()
+        .expect("OVGU website is unreachable!");
     response.read_to_string(&mut body).expect("OVGU website returned invalid HTML!");
     let document = scraper::Html::parse_document(&body);
 
@@ -260,7 +343,8 @@ fn main() {
                 .map(|element| {
                     let notes = match element.select(&sel_notes)
                             .next()
-                            .and_then(|node| node.text().next()) {
+                            .and_then(|node| node.text().next())
+                        {
                             Some(v) => v.trim(),
                             None => "",
                         }
@@ -269,9 +353,11 @@ fn main() {
 
                     let mut rest = vec![];
                     let additives = notes.filter_map(|item| {
-                            match Additive::from_str(item) {
+                            match Additive::from_str(item)
+                            {
                                 Ok(v) => Some(v),
-                                Err(..) => {
+                                Err(..) =>
+                                {
                                     rest.push(item);
                                     None
                                 }
@@ -309,7 +395,7 @@ fn main() {
                         .collect();
 
                     Meal {
-                        name: name,
+                        name: name.to_string(),
                         price: price,
                         symbols: symbols,
                         additives: additives,
@@ -322,16 +408,20 @@ fn main() {
                 .next()
                 .and_then(|node| node.text().next())
                 .expect("Cannot find side dishes!");
-            let side_dishes = side_dishes_str[10..].trim().split(", ").collect::<Vec<&str>>();
+            let side_dishes = side_dishes_str[10..]
+                .trim()
+                .split(", ")
+                .map(|s| s.to_string())
+                .collect::<Vec<String>>();
 
             Day {
-                date: date,
+                date: NaiveDateSerde(date),
                 meals: meals,
                 side_dishes: side_dishes,
             }
         })
         .collect::<Vec<Day>>();
 
-    println!("{:?}", days);
-    // println!("{}", serde_json::to_string(&days).expect("Failed to convert to JSON!"));
+    serde_json::to_writer_pretty(&mut std::io::stdout(), &days).unwrap();
+    println!();
 }
