@@ -27,7 +27,7 @@ impl std::fmt::Display for Error
 
 impl std::error::Error for Error
 {
-    fn description(& self) -> &str
+    fn description(&self) -> &str
     {
         match *self
         {
