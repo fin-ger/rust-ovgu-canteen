@@ -67,7 +67,7 @@ impl std::str::FromStr for Allergenic
             "(l)" => Ok(Allergenic::Sulphite),
             "(m)" => Ok(Allergenic::Lupin),
             "(n)" => Ok(Allergenic::Mollusc),
-            _ => Err(ovgu::Error::AllergenicCreation(s.to_owned())),
+            _ => Err(ovgu::Error::Creation("allergenic", s.to_owned(), None)),
         }
     }
 }

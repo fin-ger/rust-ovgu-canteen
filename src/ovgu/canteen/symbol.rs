@@ -41,7 +41,7 @@ impl std::str::FromStr for Symbol
             "Symbol MensaVital" => Ok(Symbol::MensaVital),
             "Symbol Knoblauch" => Ok(Symbol::Garlic),
             "Symbol artgerechte Tierhaltung" => Ok(Symbol::AnimalWelfare),
-            _ => Err(ovgu::Error::SymbolCreation(s.to_owned())),
+            _ => Err(ovgu::Error::Creation("symbol", s.to_owned(), None)),
         }
     }
 }

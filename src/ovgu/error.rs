@@ -3,11 +3,9 @@ use std;
 #[derive(Debug)]
 pub enum Error
 {
-    AdditiveCreation(String),
-    AllergenicCreation(String),
-    SymbolCreation(String),
-    NoPrice(String),
-    InvalidPrice(String, std::num::ParseFloatError),
+    Creation(&'static str, String, Option<Box<std::error::Error>>),
+    NotAvailable(&'static str, &'static str, Option<Box<std::error::Error>>),
+    InvalidValue(&'static str, &'static str, Option<Box<std::error::Error>>),
 }
 
 impl std::fmt::Display for Error
@@ -16,11 +14,39 @@ impl std::fmt::Display for Error
     {
         match *self
         {
-            Error::AdditiveCreation(ref input) => write!(f, "Error creating Additive from '{}'", input),
-            Error::AllergenicCreation(ref input) => write!(f, "Error creating Allergenic from '{}'", input),
-            Error::SymbolCreation(ref input) => write!(f, "Error creating Symbol from '{}'", input),
-            Error::NoPrice(ref what) => write!(f, "Error finding Price for {}", what),
-            Error::InvalidPrice(ref what, ref e) => write!(f, "Error parsing Price '{}' - Reason: {}", what, e),
+            Error::Creation(ref what, ref input, ref err) => {
+                match *err
+                {
+                    Some(ref err_box) => {
+                        write!(f, "Error creating {} from '{}' - Reason: {}", what, input, err_box)
+                    },
+                    None => {
+                        write!(f, "Error creating {} from '{}'!", what, input)
+                    }
+                }
+            },
+            Error::NotAvailable(ref what, ref thing, ref err) => {
+                match *err
+                {
+                    Some(ref err_box) => {
+                        write!(f, "Error finding {} for {} - Reason: {}", what, thing, err_box)
+                    },
+                    None => {
+                        write!(f, "Error finding {} for {}!", what, thing)
+                    }
+                }
+            },
+            Error::InvalidValue(ref what, ref val, ref err) => {
+                match *err
+                {
+                    Some(ref err_box) => {
+                        write!(f, "Error parsing {} '{}' - Reason: {}", what, val, err_box)
+                    },
+                    None => {
+                        write!(f, "Error parsing {} '{}'!", what, val)
+                    }
+                }
+            },
         }
     }
 }
@@ -31,11 +57,9 @@ impl std::error::Error for Error
     {
         match *self
         {
-            Error::AdditiveCreation(..) => "Cannot create additive",
-            Error::AllergenicCreation(..) => "Cannot create allergenic",
-            Error::SymbolCreation(..) => "Cannot create symbol",
-            Error::NoPrice(..) => "Cannot find price",
-            Error::InvalidPrice(..) => "Cannot parse price",
+            Error::Creation(..) => "Cannot create instance",
+            Error::NotAvailable(..) => "Cannot find requested value",
+            Error::InvalidValue(..) => "Cannot parse given value",
         }
     }
 }

@@ -18,24 +18,24 @@ impl std::str::FromStr for Price
         let mut split = replaced.split(" | ");
 
         let price_student = split.next()
-            .ok_or(ovgu::Error::NoPrice("student".to_owned()))
+            .ok_or(ovgu::Error::NotAvailable("price", "student", None))
             .and_then(|num| {
-                num.parse()
-                    .map_err(|e| ovgu::Error::InvalidPrice("student".to_owned(), e))
+                num.parse::<f32>()
+                    .map_err(|e| ovgu::Error::InvalidValue("price", "student", Some(Box::new(e))))
             })?;
 
         let price_staff = split.next()
-            .ok_or(ovgu::Error::NoPrice("staff".to_owned()))
+            .ok_or(ovgu::Error::NotAvailable("price", "staff", None))
             .and_then(|num| {
-                num.parse()
-                    .map_err(|e| ovgu::Error::InvalidPrice("staff".to_owned(), e))
+                num.parse::<f32>()
+                    .map_err(|e| ovgu::Error::InvalidValue("price", "staff", Some(Box::new(e))))
             })?;
 
         let price_guest = split.next()
-            .ok_or(ovgu::Error::NoPrice("guest".to_owned()))
+            .ok_or(ovgu::Error::NotAvailable("price", "guest", None))
             .and_then(|num| {
-                num.parse()
-                    .map_err(|e| ovgu::Error::InvalidPrice("guest".to_owned(), e))
+                num.parse::<f32>()
+                    .map_err(|e| ovgu::Error::InvalidValue("price", "guest", Some(Box::new(e))))
             })?;
 
         Ok(ovgu::canteen::Price {

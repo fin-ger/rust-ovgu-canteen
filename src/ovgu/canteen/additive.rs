@@ -33,7 +33,7 @@ impl std::str::FromStr for Additive
             "(8)" => Ok(Additive::Phosphates),
             "(9)" => Ok(Additive::Sweetener),
             "(10)" => Ok(Additive::Phenylalanine),
-            _ => Err(ovgu::Error::AdditiveCreation(s.to_owned())),
+            _ => Err(ovgu::Error::Creation("additive", s.to_owned(), None)),
         }
     }
 }
