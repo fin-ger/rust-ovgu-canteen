@@ -1,6 +1,6 @@
-use scraper;
 use ovgu;
-use ovgu::canteen::{Price, Symbol, Additive, Allergenic};
+use ovgu::canteen::{Additive, Allergenic, Price, Symbol};
+use scraper;
 use std::str::FromStr;
 
 #[derive(Serialize, Deserialize)]
@@ -18,7 +18,8 @@ impl ovgu::canteen::FromElement for Meal
     type Err = ovgu::Error;
     fn from_element(meal_node: &scraper::ElementRef) -> Result<Self, Self::Err>
     {
-        let notes = meal_node.select(&ovgu_canteen_selector![notes])
+        let notes = meal_node
+            .select(&ovgu_canteen_selector![notes])
             .next()
             .and_then(|node| node.text().next())
             .unwrap_or("")
@@ -45,19 +46,22 @@ impl ovgu::canteen::FromElement for Meal
             .map(|item| Allergenic::from_str(item))
             .collect::<Result<Vec<Allergenic>, ovgu::Error>>()?;
 
-        let name = meal_node.select(&ovgu_canteen_selector![name])
+        let name = meal_node
+            .select(&ovgu_canteen_selector![name])
             .next()
             .and_then(|node| node.text().next())
             .ok_or(ovgu::Error::NotAvailable("name", "meal", None))
             .map(|n| n.trim())?;
 
-        let price = meal_node.select(&ovgu_canteen_selector![price])
+        let price = meal_node
+            .select(&ovgu_canteen_selector![price])
             .next()
             .and_then(|node| node.text().last())
             .ok_or(ovgu::Error::NotAvailable("price", "meal", None))
             .and_then(|p| Price::from_str(p.trim()))?;
 
-        let symbols = meal_node.select(&ovgu_canteen_selector![symbols])
+        let symbols = meal_node
+            .select(&ovgu_canteen_selector![symbols])
             .map(|img| {
                 img.value()
                     .attr("title")
@@ -66,15 +70,12 @@ impl ovgu::canteen::FromElement for Meal
             })
             .collect::<Result<Vec<Symbol>, ovgu::Error>>()?;
 
-        Ok(
-            Meal
-            {
-                name: name.to_owned(),
-                price: price,
-                symbols: symbols,
-                additives: additives,
-                allergenics: allergenics,
-            }
-        )
+        Ok(Meal {
+            name: name.to_owned(),
+            price: price,
+            symbols: symbols,
+            additives: additives,
+            allergenics: allergenics,
+        })
     }
 }

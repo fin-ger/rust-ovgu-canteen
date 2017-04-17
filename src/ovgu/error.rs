@@ -14,39 +14,47 @@ impl std::fmt::Display for Error
     {
         match *self
         {
-            Error::Creation(ref what, ref input, ref err) => {
+            Error::Creation(ref what, ref input, ref err) =>
+            {
                 match *err
                 {
-                    Some(ref err_box) => {
-                        write!(f, "Error creating {} from '{}' - Reason: {}", what, input, err_box)
-                    },
-                    None => {
-                        write!(f, "Error creating {} from '{}'!", what, input)
+                    Some(ref err_box) =>
+                    {
+                        write!(f,
+                               "Error creating {} from '{}' - Reason: {}",
+                               what,
+                               input,
+                               err_box)
                     }
+                    None => write!(f, "Error creating {} from '{}'!", what, input),
                 }
-            },
-            Error::NotAvailable(ref what, ref thing, ref err) => {
+            }
+            Error::NotAvailable(ref what, ref thing, ref err) =>
+            {
                 match *err
                 {
-                    Some(ref err_box) => {
-                        write!(f, "Error {} is unavailable for {} - Reason: {}", what, thing, err_box)
-                    },
-                    None => {
-                        write!(f, "Error {} is unavailable for {}!", what, thing)
+                    Some(ref err_box) =>
+                    {
+                        write!(f,
+                               "Error {} is unavailable for {} - Reason: {}",
+                               what,
+                               thing,
+                               err_box)
                     }
+                    None => write!(f, "Error {} is unavailable for {}!", what, thing),
                 }
-            },
-            Error::InvalidValue(ref what, ref val, ref err) => {
+            }
+            Error::InvalidValue(ref what, ref val, ref err) =>
+            {
                 match *err
                 {
-                    Some(ref err_box) => {
+                    Some(ref err_box) =>
+                    {
                         write!(f, "Error parsing {} '{}' - Reason: {}", what, val, err_box)
-                    },
-                    None => {
-                        write!(f, "Error parsing {} '{}'!", what, val)
                     }
+                    None => write!(f, "Error parsing {} '{}'!", what, val),
                 }
-            },
+            }
         }
     }
 }

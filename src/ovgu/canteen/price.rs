@@ -1,5 +1,6 @@
-use std;
+
 use ovgu;
+use std;
 
 #[derive(Serialize, Deserialize)]
 pub struct Price
@@ -17,25 +18,31 @@ impl std::str::FromStr for Price
         let replaced = str::replace(s, ",", ".");
         let mut split = replaced.split(" | ");
 
-        let price_student = split.next()
+        let price_student = split
+            .next()
             .ok_or(ovgu::Error::NotAvailable("price", "student", None))
             .and_then(|num| {
-                num.parse::<f32>()
-                    .map_err(|e| ovgu::Error::InvalidValue("price", "student", Some(Box::new(e))))
+                num.parse::<f32>().map_err(|e| {
+                    ovgu::Error::InvalidValue("price", "student", Some(Box::new(e)))
+                })
             })?;
 
-        let price_staff = split.next()
+        let price_staff = split
+            .next()
             .ok_or(ovgu::Error::NotAvailable("price", "staff", None))
             .and_then(|num| {
-                num.parse::<f32>()
-                    .map_err(|e| ovgu::Error::InvalidValue("price", "staff", Some(Box::new(e))))
+                num.parse::<f32>().map_err(|e| {
+                    ovgu::Error::InvalidValue("price", "staff", Some(Box::new(e)))
+                })
             })?;
 
-        let price_guest = split.next()
+        let price_guest = split
+            .next()
             .ok_or(ovgu::Error::NotAvailable("price", "guest", None))
             .and_then(|num| {
-                num.parse::<f32>()
-                    .map_err(|e| ovgu::Error::InvalidValue("price", "guest", Some(Box::new(e))))
+                num.parse::<f32>().map_err(|e| {
+                    ovgu::Error::InvalidValue("price", "guest", Some(Box::new(e)))
+                })
             })?;
 
         Ok(ovgu::canteen::Price {
