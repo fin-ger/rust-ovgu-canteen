@@ -1,11 +1,11 @@
-use ovgu::canteen;
+use ovgu::canteen::{Price, Symbol, Additive, Allergenic};
 
 #[derive(Serialize, Deserialize)]
 pub struct Meal
 {
     pub name: String,
-    pub price: canteen::Price,
-    pub symbols: Vec<canteen::Symbol>,
-    pub additives: Vec<canteen::Additive>,
-    pub allergenics: Vec<canteen::Allergenic>,
+    pub price: Price,
+    pub symbols: Vec<Symbol>,
+    pub additives: Vec<Additive>,
+    pub allergenics: Vec<Allergenic>,
 }

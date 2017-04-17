@@ -1,5 +1,5 @@
 use std;
-use ovgu::canteen;
+use ovgu;
 
 #[derive(Serialize, Deserialize)]
 pub struct Price
@@ -11,31 +11,37 @@ pub struct Price
 
 impl std::str::FromStr for Price
 {
-    type Err = String;
-    fn from_str(s: &str) -> Result<Self, String>
+    type Err = ovgu::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err>
     {
         let replaced = str::replace(s, ",", ".");
         let mut split = replaced.split(" | ");
 
-        let student = split.next()
-            .ok_or("Cannot find student price!")
-            .and_then(|num| num.parse().map_err(|_| "Failed to parse student price!"))
-            ?;
+        let price_student = split.next()
+            .ok_or(ovgu::Error::NoPrice("student".to_owned()))
+            .and_then(|num| {
+                num.parse()
+                    .map_err(|e| ovgu::Error::InvalidPrice("student".to_owned(), e))
+            })?;
 
-        let staff = split.next()
-            .ok_or("Cannot find staff price!")
-            .and_then(|num| num.parse().map_err(|_| "Failed to parse staff price!"))
-            ?;
+        let price_staff = split.next()
+            .ok_or(ovgu::Error::NoPrice("staff".to_owned()))
+            .and_then(|num| {
+                num.parse()
+                    .map_err(|e| ovgu::Error::InvalidPrice("staff".to_owned(), e))
+            })?;
 
-        let guest = split.next()
-            .ok_or("Cannot find guest price!")
-            .and_then(|num| num.parse().map_err(|_| "Failed to parse guest price!"))
-            ?;
+        let price_guest = split.next()
+            .ok_or(ovgu::Error::NoPrice("guest".to_owned()))
+            .and_then(|num| {
+                num.parse()
+                    .map_err(|e| ovgu::Error::InvalidPrice("guest".to_owned(), e))
+            })?;
 
-        Ok(canteen::Price {
-            student: student,
-            staff: staff,
-            guest: guest,
+        Ok(ovgu::canteen::Price {
+            student: price_student,
+            staff: price_staff,
+            guest: price_guest,
         })
     }
 }

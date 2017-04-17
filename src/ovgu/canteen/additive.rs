@@ -1,4 +1,5 @@
 use std;
+use ovgu;
 
 #[derive(Serialize, Deserialize)]
 pub enum Additive
@@ -17,8 +18,8 @@ pub enum Additive
 
 impl std::str::FromStr for Additive
 {
-    type Err = String;
-    fn from_str(s: &str) -> Result<Self, String>
+    type Err = ovgu::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err>
     {
         match s
         {
@@ -32,7 +33,7 @@ impl std::str::FromStr for Additive
             "(8)" => Ok(Additive::Phosphates),
             "(9)" => Ok(Additive::Sweetener),
             "(10)" => Ok(Additive::Phenylalanine),
-            _ => Err(format!("Cannot create additive from '{}'!", s)),
+            _ => Err(ovgu::Error::AdditiveCreation(s.to_owned())),
         }
     }
 }

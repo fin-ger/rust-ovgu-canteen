@@ -1,4 +1,5 @@
 use std;
+use ovgu;
 
 #[derive(Serialize, Deserialize)]
 pub enum Symbol
@@ -21,8 +22,8 @@ pub enum Symbol
 
 impl std::str::FromStr for Symbol
 {
-    type Err = String;
-    fn from_str(s: &str) -> Result<Self, String>
+    type Err = ovgu::Error;
+    fn from_str(s: &str) -> Result<Self, Self::Err>
     {
         match s
         {
@@ -40,7 +41,7 @@ impl std::str::FromStr for Symbol
             "Symbol MensaVital" => Ok(Symbol::MensaVital),
             "Symbol Knoblauch" => Ok(Symbol::Garlic),
             "Symbol artgerechte Tierhaltung" => Ok(Symbol::AnimalWelfare),
-            _ => Err(format!("Cannot create symbol from '{}'!", s)),
+            _ => Err(ovgu::Error::SymbolCreation(s.to_owned())),
         }
     }
 }
