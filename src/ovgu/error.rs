@@ -29,10 +29,10 @@ impl std::fmt::Display for Error
                 match *err
                 {
                     Some(ref err_box) => {
-                        write!(f, "Error finding {} for {} - Reason: {}", what, thing, err_box)
+                        write!(f, "Error {} is unavailable for {} - Reason: {}", what, thing, err_box)
                     },
                     None => {
-                        write!(f, "Error finding {} for {}!", what, thing)
+                        write!(f, "Error {} is unavailable for {}!", what, thing)
                     }
                 }
             },

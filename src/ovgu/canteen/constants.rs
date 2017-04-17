@@ -6,7 +6,8 @@ macro_rules! base_url {
 
 #[macro_export]
 macro_rules! ovgu_canteen_url {
-    [unten] => ( base_url!["mensa-unicampus/speiseplan-unten/"] )
+    [downstairs] => ( base_url!["mensa-unicampus/speiseplan-unten/"] );
+    [upstairs] => ( base_url!["mensa-unicampus/speiseplan-oben/"] );
 }
 
 macro_rules! parse_and_unwrap_selector {
