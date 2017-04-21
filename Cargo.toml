@@ -1,6 +1,6 @@
 [package]
 name = "ovgu-canteen"
-version = "0.1.0"
+version = "0.0.1"
 authors = ["Fin Christensen <christensen.fin@gmail.com>"]
 
 [dependencies]
@@ -8,6 +8,8 @@ scraper = "*"
 hyper = "*"
 hyper-native-tls = "*"
 chrono = { version = "*", features = ["serde"] }
-serde = "*"
-serde_derive = "*"
-serde_json = "*"
+serde = "<1.0.0"
+serde_derive = "<1.0.0"
+
+[dev-dependencies]
+serde_json = "<1.0.0"

@@ -1,17 +1,7 @@
-#[macro_use]
-extern crate serde_derive;
-
-extern crate hyper;
-extern crate hyper_native_tls;
-extern crate scraper;
-extern crate chrono;
-extern crate serde;
+extern crate ovgu_canteen;
 extern crate serde_json;
 
-#[macro_use]
-mod ovgu;
-
-use ovgu::canteen::{Canteen, CanteenDescription};
+use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
 
 fn main()
 {

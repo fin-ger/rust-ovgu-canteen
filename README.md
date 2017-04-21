@@ -15,6 +15,16 @@
 
 ### Current example usage
 
+First setup development environment:
+
 ```
-cargo run | jq -r '.[0].days[0].meals[0].price.student'
+cargo update
 ```
+
+Then test if the library works:
+
+```
+cargo run --example json | jq -r '.[0].days[0].meals[0].price.student'
+```
+
+> jq is a json querying software available via your distributions package manager.
