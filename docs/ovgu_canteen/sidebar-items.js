@@ -1,1 +1,0 @@
-initSidebarItems({"macro":[["ovgu_canteen_selector",""],["ovgu_canteen_url",""]],"mod":[["ovgu","This module can gather information provided by the webpages of the Otto-von-Guericke University Magdeburg (ovgu). This module currently provides access to the canteen menus and is able to serialize the information to a json string."]]});
