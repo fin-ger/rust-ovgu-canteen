@@ -5,7 +5,7 @@
 ---
 
 
-## [Documentation](target/doc)
+## [Documentation](target/doc/ovgu_canteen/)
 
 
 ### Current example usage
