@@ -1,4 +1,4 @@
-# OVGU Canteen Information for Rust
+# OVGU Canteen Information for Rust [![crates.io](https://img.shields.io/crates/v/ovgu-canteen.svg)](https://crates.io/crates/ovgu-canteen)
 
 **This repository contains a program that extracts the canteen meals of the Otto-von-Guericke University from the website.**
 
