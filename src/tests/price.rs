@@ -16,9 +16,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#[macro_use]
-pub mod canteen;
+//! This module contains unit tests for `ovgu::canteen::Price`.
 
-mod error;
+use ovgu::canteen::Price;
+use std::str::FromStr;
 
-pub use self::error::Error;
+#[test]
+fn from_str()
+{
+    let price = Price { student: 1.40, staff: 2.50, guest: 3.60 };
+    assert_eq!(Price::from_str("1,40 | 2,50 | 3,60").unwrap(), price);
+}

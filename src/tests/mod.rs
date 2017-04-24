@@ -16,9 +16,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#[macro_use]
-pub mod canteen;
+//! This module holds unit tests for `libovgu-canteen`.
 
-mod error;
-
-pub use self::error::Error;
+pub mod additive;
+pub mod allergenic;
+pub mod price;
+pub mod symbol;

@@ -16,9 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#[macro_use]
-pub mod canteen;
+//! This module contains unit tests for `ovgu::canteen::Additive`.
 
-mod error;
+use ovgu::canteen::Additive;
+use std::str::FromStr;
 
-pub use self::error::Error;
+#[test]
+fn from_str()
+{
+    assert_eq!(Additive::from_str("(9)").unwrap(), Additive::Sweetener);
+}

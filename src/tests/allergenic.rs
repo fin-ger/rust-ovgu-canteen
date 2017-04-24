@@ -16,9 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#[macro_use]
-pub mod canteen;
+//! This module contains unit tests for `ovgu::canteen::Allergenic`.
 
-mod error;
+use ovgu::canteen::Allergenic;
+use std::str::FromStr;
 
-pub use self::error::Error;
+#[test]
+fn from_str()
+{
+    assert_eq!(Allergenic::from_str("(h6)").unwrap(), Allergenic::BrazilNut);
+}

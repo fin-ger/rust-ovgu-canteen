@@ -17,15 +17,37 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 extern crate ovgu_canteen;
-extern crate serde_json;
+extern crate chrono;
 
 use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
+use chrono::TimeZone;
 
-fn main()
+#[test]
+fn canteen_upstairs()
 {
-    let canteens = vec![Canteen::new(CanteenDescription::Downstairs).unwrap(),
-                        Canteen::new(CanteenDescription::Upstairs).unwrap()];
+    // test if parsing is working
+    let canteen = Canteen::new(CanteenDescription::Upstairs).unwrap();
 
-    serde_json::to_writer_pretty(&mut std::io::stdout(), &canteens).unwrap();
-    println!();
+    assert_eq!(canteen.description, CanteenDescription::Upstairs);
+    assert!(canteen.days.len() > 0);
+
+    for day in canteen.days
+    {
+        // this is not quite correct as the local timezone may not be summer time aware MEZ
+        assert!(chrono::Local::today() <= chrono::Local.from_local_date(&day.date).unwrap());
+
+        for meal in day.meals
+        {
+            assert!(meal.name.len() > 0);
+
+            assert!(0f32 < meal.price.student);
+            assert!(meal.price.student <= meal.price.staff);
+            assert!(meal.price.staff <= meal.price.guest);
+        }
+
+        for side_dish in day.side_dishes
+        {
+            assert!(side_dish.len() > 0);
+        }
+    }
 }
