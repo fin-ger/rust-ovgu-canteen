@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Html","An HTML tree."],["Select","Iterator over elements matching a selector."]]});

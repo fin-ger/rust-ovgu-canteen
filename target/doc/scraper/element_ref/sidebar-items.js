@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["ElementRef","Wrapper around a reference to an element node."],["Select","Iterator over descendent elements matching a selector."],["Text","Iterator over descendent text nodes."]]});
