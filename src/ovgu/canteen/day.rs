@@ -21,11 +21,17 @@ use ovgu;
 use ovgu::canteen::Meal;
 use scraper;
 
+/// A `Day` holds all the meals that are available at the given day.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Day
 {
+    /// The date of thsi day.
     pub date: chrono::NaiveDate,
+
+    /// The meal available on this day.
     pub meals: Vec<Meal>,
+
+    /// The side dishes available on this day.
     pub side_dishes: Vec<String>,
 }
 

@@ -18,8 +18,20 @@
 
 use scraper;
 
+/// This trait is used to create an instance from a HTML element reference.
 pub trait FromElement: Sized
 {
+    /// This is the error type used when the creation from a HTML element fails.
     type Err;
+
+    /// Create an instance of `Self` from a HTML element reference.
+    ///
+    /// # Arguments
+    ///
+    /// `e`  - The HTML element reference.
+    ///
+    /// # Returns
+    ///
+    /// A result containing an instance of `Self` or an error.
     fn from_element(e: &scraper::ElementRef) -> Result<Self, Self::Err>;
 }

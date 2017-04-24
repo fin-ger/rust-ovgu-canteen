@@ -21,13 +21,24 @@ use ovgu::canteen::{Additive, Allergenic, Price, Symbol};
 use scraper;
 use std::str::FromStr;
 
+/// A `Meal` holds the meals name, the price, several symbols, additives,
+/// and allergenics.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Meal
 {
+    /// The name of the meal.
     pub name: String,
+
+    /// The price of the meal.
     pub price: Price,
+
+    /// Symbols that the meal is annotated with.
     pub symbols: Vec<Symbol>,
+
+    /// Additives of the meal.
     pub additives: Vec<Additive>,
+
+    /// Allergenics contained in the meal.
     pub allergenics: Vec<Allergenic>,
 }
 

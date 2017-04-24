@@ -19,11 +19,17 @@
 use ovgu;
 use std;
 
+/// This struct represents the price of a meal.
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct Price
 {
+    /// The price for students.
     pub student: f32,
+
+    /// The price for staff.
     pub staff: f32,
+
+    /// The price for guests.
     pub guest: f32,
 }
 

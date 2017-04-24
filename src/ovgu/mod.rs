@@ -16,6 +16,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#![warn(missing_docs)]
+#![doc(test(attr(allow(unused_variables), deny(warnings))))]
+
+//! This module can gather information provided by the webpages of the
+//! Otto-von-Guericke University Magdeburg (ovgu). This module currently
+//! provides access to the canteen menus and is able to serialize the
+//! information to a json string.
+
 #[macro_use]
 pub mod canteen;
 

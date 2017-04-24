@@ -24,22 +24,46 @@ use scraper;
 
 use std::io::Read;
 
+/// A canteen holds all the meals on all available days.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Canteen
 {
+    /// This identifies a canteen.
     pub description: CanteenDescription,
+
+    /// All available days holding the meals for this canteen.
     pub days: Vec<ovgu::canteen::Day>,
 }
 
+/// This enum identifies a canteen.
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub enum CanteenDescription
 {
+    /// The canteen located downstairs.
     Downstairs,
+
+    /// The canteen located upstairs.
     Upstairs,
 }
 
 impl Canteen
 {
+    /// This method creates a new canteen instance from a given description.
+    ///
+    /// # Arguments
+    ///
+    /// * `desc`  - The identifier identifying the canteen.
+    ///
+    /// # Examples
+    ///
+    /// Create a new canteen:
+    ///
+    /// ```
+    /// use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
+    ///
+    /// let canteen = Canteen::new(CanteenDescription::Downstairs).unwrap();
+    /// println!("{}", canteen.days[0].meals[0].name);
+    /// ```
     pub fn new(desc: CanteenDescription) -> Result<Self, ovgu::Error>
     {
         let ssl = hyper_native_tls::NativeTlsClient::new()

@@ -18,11 +18,63 @@
 
 use std;
 
+/// The `Error` enum represents several different error types that are used
+/// by results in this crate.
 #[derive(Debug)]
 pub enum Error
 {
+    /// This error is used when a creation of something failed.
+    ///
+    ///  * The first parameter is used to define *what* failed to create.
+    ///  * The second parameter is used to provide a string representation
+    ///    from *which* the creation failed.
+    ///  * The third parameter contains the previous error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use ovgu_canteen::ovgu::Error;
+    ///
+    /// let data = String::from("five");
+    /// let number = match data.as_str()
+    /// {
+    ///     "five" => Ok(5),
+    ///     _ => Err(Error::Creation("number", data, None)),
+    /// };
+    /// ```
     Creation(&'static str, String, Option<Box<std::error::Error>>),
+
+    /// This error is used when something is not available or cannot be found.
+    ///
+    ///  * The first parameter is used to define what is *affected* by this error.
+    ///  * The second parameter is used to define what *item* is not available.
+    ///  * The third parameter contains the previous error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use ovgu_canteen::ovgu::Error;
+    ///
+    /// let data = ["foo"];
+    /// let mut iter = data.iter();
+    /// let result = iter.next().ok_or(Error::NotAvailable("result", "foo", None));
+    /// ```
     NotAvailable(&'static str, &'static str, Option<Box<std::error::Error>>),
+
+    /// This error is used when invalid data got passed.
+    ///
+    ///  * The first parameter is used to define what is *affected* by this error.
+    ///  * The second parameter is used to define what *item* is invalid.
+    ///  * The third parameter contains the previous error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use ovgu_canteen::ovgu::Error;
+    ///
+    /// let data = String::from("42");
+    /// let number = data.parse::<f32>().map_err(|e| Error::InvalidValue("number", "data", Some(Box::new(e))));
+    /// ```
     InvalidValue(&'static str, &'static str, Option<Box<std::error::Error>>),
 }
 

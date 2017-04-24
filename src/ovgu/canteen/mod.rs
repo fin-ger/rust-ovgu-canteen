@@ -16,6 +16,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+//! The `ovgu::canteen` module is able to parse the ovgu canteen website
+//! and provide the information as serializable and deserializable structs.
+
 #[macro_use]
 mod constants;
 

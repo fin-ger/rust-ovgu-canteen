@@ -19,7 +19,9 @@
 use ovgu;
 use std;
 
+/// This enum represents symbols a meal is annotated with.
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[allow(missing_docs)]
 pub enum Symbol
 {
     Pig,

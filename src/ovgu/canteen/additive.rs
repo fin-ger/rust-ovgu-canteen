@@ -19,7 +19,9 @@
 use ovgu;
 use std;
 
+/// An `Additive` is used to represent additives of a meal.
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[allow(missing_docs)]
 pub enum Additive
 {
     FoodColoring,
@@ -34,6 +36,17 @@ pub enum Additive
     Phenylalanine,
 }
 
+/// This method is used to create an `Additive` from the additive strings
+/// used on the canteen website.
+///
+/// # Examples
+///
+/// ```
+/// use ovgu_canteen::ovgu::canteen::Additive;
+/// use std::str::FromStr;
+///
+/// let additive = Additive::from_str("(2)");
+/// ```
 impl std::str::FromStr for Additive
 {
     type Err = ovgu::Error;
