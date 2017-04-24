@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ElementRef` struct in crate `scraper`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ElementRef">
+
+    <title>scraper::element_ref::ElementRef - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>scraper</a>::<wbr><a href='index.html'>element_ref</a></p><script>window.sidebarCurrent = {name: 'ElementRef', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>scraper</a>::<wbr><a href='index.html'>element_ref</a>::<wbr><a class='struct' href=''>ElementRef</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#17-19' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct ElementRef&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Wrapper around a reference to an element node.</p>
+
+<p>This wrapper implements the <code>Element</code> trait from the <code>selectors</code> crate, which allows it to be
+matched against CSS selectors.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#21-75' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.wrap' class='method'><span id='wrap.v' class='invisible'><code>fn <a href='#method.wrap' class='fnname'>wrap</a>(node: <a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, <a class='enum' href='../../scraper/node/enum.Node.html' title='scraper::node::Node'>Node</a>&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Self&gt;</code></span></h4>
+<div class='docblock'><p>Wraps a <code>NodeRef</code> only if it references a <code>Node::Element</code>.</p>
+</div><h4 id='method.value' class='method'><span id='value.v' class='invisible'><code>fn <a href='#method.value' class='fnname'>value</a>(&amp;self) -&gt; &amp;'a <a class='struct' href='../../scraper/node/struct.Element.html' title='scraper::node::Element'>Element</a></code></span></h4>
+<div class='docblock'><p>Returns the <code>Element</code> referenced by <code>self</code>.</p>
+</div><h4 id='method.select' class='method'><span id='select.v' class='invisible'><code>fn <a href='#method.select' class='fnname'>select</a>&lt;'b&gt;(&amp;self, selector: &amp;'b <a class='struct' href='../../scraper/selector/struct.Selector.html' title='scraper::selector::Selector'>Selector</a>) -&gt; <a class='struct' href='../../scraper/element_ref/struct.Select.html' title='scraper::element_ref::Select'>Select</a>&lt;'a, 'b&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over descendent elements matching a selector.</p>
+</div><h4 id='method.html' class='method'><span id='html.v' class='invisible'><code>fn <a href='#method.html' class='fnname'>html</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h4>
+<div class='docblock'><p>Returns the HTML of this element.</p>
+</div><h4 id='method.inner_html' class='method'><span id='inner_html.v' class='invisible'><code>fn <a href='#method.inner_html' class='fnname'>inner_html</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h4>
+<div class='docblock'><p>Returns the inner HTML of this element.</p>
+</div><h4 id='method.text' class='method'><span id='text.v' class='invisible'><code>fn <a href='#method.text' class='fnname'>text</a>(&amp;self) -&gt; <a class='struct' href='../../scraper/element_ref/struct.Text.html' title='scraper::element_ref::Text'>Text</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over descendent text nodes.</p>
+</div></div><h2 id='deref-methods'>Methods from <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=<a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, <a class='enum' href='../../scraper/node/enum.Node.html' title='scraper::node::Node'>Node</a>&gt;&gt;</h2><div class='impl-items'><h4 id='method.value-1' class='method'><span id='value.v-1' class='invisible'><code>fn <a href='#method.value-1' class='fnname'>value</a>(&amp;self) -&gt; &amp;'a T</code></span></h4>
+<div class='docblock'><p>Returns the value of this node.</p>
+</div><h4 id='method.id' class='method'><span id='id.v' class='invisible'><code>fn <a href='#method.id' class='fnname'>id</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/struct.NodeId.html' title='ego_tree::NodeId'>NodeId</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Returns the ID of this node.</p>
+</div><h4 id='method.parent' class='method'><span id='parent.v' class='invisible'><code>fn <a href='#method.parent' class='fnname'>parent</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, T&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Returns a reference to this node&#39;s parent.</p>
+</div><h4 id='method.prev_sibling' class='method'><span id='prev_sibling.v' class='invisible'><code>fn <a href='#method.prev_sibling' class='fnname'>prev_sibling</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, T&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Returns a reference to this node&#39;s previous sibling.</p>
+</div><h4 id='method.next_sibling' class='method'><span id='next_sibling.v' class='invisible'><code>fn <a href='#method.next_sibling' class='fnname'>next_sibling</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, T&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Returns a reference to this node&#39;s next sibling.</p>
+</div><h4 id='method.first_child' class='method'><span id='first_child.v' class='invisible'><code>fn <a href='#method.first_child' class='fnname'>first_child</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, T&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Returns a reference to this node&#39;s first child.</p>
+</div><h4 id='method.last_child' class='method'><span id='last_child.v' class='invisible'><code>fn <a href='#method.last_child' class='fnname'>last_child</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, T&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Returns a reference to this node&#39;s last child.</p>
+</div><h4 id='method.has_siblings' class='method'><span id='has_siblings.v' class='invisible'><code>fn <a href='#method.has_siblings' class='fnname'>has_siblings</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Returns true if this node has siblings.</p>
+</div><h4 id='method.has_children' class='method'><span id='has_children.v' class='invisible'><code>fn <a href='#method.has_children' class='fnname'>has_children</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Returns true if this node has children.</p>
+</div></div><div class='impl-items'><h4 id='method.ancestors' class='method'><span id='ancestors.v' class='invisible'><code>fn <a href='#method.ancestors' class='fnname'>ancestors</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/iter/struct.Ancestors.html' title='ego_tree::iter::Ancestors'>Ancestors</a>&lt;'a, T&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over this node&#39;s ancestors.</p>
+</div><h4 id='method.prev_siblings' class='method'><span id='prev_siblings.v' class='invisible'><code>fn <a href='#method.prev_siblings' class='fnname'>prev_siblings</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/iter/struct.PrevSiblings.html' title='ego_tree::iter::PrevSiblings'>PrevSiblings</a>&lt;'a, T&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over this node&#39;s previous siblings.</p>
+</div><h4 id='method.next_siblings' class='method'><span id='next_siblings.v' class='invisible'><code>fn <a href='#method.next_siblings' class='fnname'>next_siblings</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/iter/struct.NextSiblings.html' title='ego_tree::iter::NextSiblings'>NextSiblings</a>&lt;'a, T&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over this node&#39;s next siblings.</p>
+</div><h4 id='method.children' class='method'><span id='children.v' class='invisible'><code>fn <a href='#method.children' class='fnname'>children</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/iter/struct.Children.html' title='ego_tree::iter::Children'>Children</a>&lt;'a, T&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over this node&#39;s children.</p>
+</div><h4 id='method.first_children' class='method'><span id='first_children.v' class='invisible'><code>fn <a href='#method.first_children' class='fnname'>first_children</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/iter/struct.FirstChildren.html' title='ego_tree::iter::FirstChildren'>FirstChildren</a>&lt;'a, T&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over this node&#39;s first children.</p>
+</div><h4 id='method.last_children' class='method'><span id='last_children.v' class='invisible'><code>fn <a href='#method.last_children' class='fnname'>last_children</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/iter/struct.LastChildren.html' title='ego_tree::iter::LastChildren'>LastChildren</a>&lt;'a, T&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator over this node&#39;s last children.</p>
+</div><h4 id='method.traverse' class='method'><span id='traverse.v' class='invisible'><code>fn <a href='#method.traverse' class='fnname'>traverse</a>(&amp;self) -&gt; <a class='struct' href='../../ego_tree/iter/struct.Traverse.html' title='ego_tree::iter::Traverse'>Traverse</a>&lt;'a, T&gt;</code></span></h4>
+<div class='docblock'><p>Returns an iterator which traverses the subtree starting at this node.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='../../selectors/tree/trait.Element.html' title='selectors::tree::Element'>Element</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/element.rs.html#11-91' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'><p>Note: will never match against non-tree-structure pseudo-classes.</p>
+</div><div class='impl-items'><h4 id='associatedtype.Impl' class='type'><span id='Impl.t' class='invisible'><code>type <a href='../../selectors/tree/trait.Element.html#associatedtype.Impl' class='type'>Impl</a> = <a class='struct' href='../../scraper/selector/struct.Simple.html' title='scraper::selector::Simple'>Simple</a></code></span></h4>
+<h4 id='method.parent_element' class='method'><span id='parent_element.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.parent_element' class='fnname'>parent_element</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Self&gt;</code></span></h4>
+<h4 id='method.first_child_element' class='method'><span id='first_child_element.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.first_child_element' class='fnname'>first_child_element</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Self&gt;</code></span></h4>
+<h4 id='method.last_child_element' class='method'><span id='last_child_element.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.last_child_element' class='fnname'>last_child_element</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Self&gt;</code></span></h4>
+<h4 id='method.prev_sibling_element' class='method'><span id='prev_sibling_element.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.prev_sibling_element' class='fnname'>prev_sibling_element</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Self&gt;</code></span></h4>
+<h4 id='method.next_sibling_element' class='method'><span id='next_sibling_element.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.next_sibling_element' class='fnname'>next_sibling_element</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Self&gt;</code></span></h4>
+<h4 id='method.is_html_element_in_html_document' class='method'><span id='is_html_element_in_html_document.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.is_html_element_in_html_document' class='fnname'>is_html_element_in_html_document</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h4 id='method.get_local_name' class='method'><span id='get_local_name.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.get_local_name' class='fnname'>get_local_name</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../string_cache/atom/struct.Atom.html' title='string_cache::atom::Atom'>Atom</a></code></span></h4>
+<h4 id='method.get_namespace' class='method'><span id='get_namespace.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.get_namespace' class='fnname'>get_namespace</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../string_cache/namespace/struct.Namespace.html' title='string_cache::namespace::Namespace'>Namespace</a></code></span></h4>
+<h4 id='method.match_non_ts_pseudo_class' class='method'><span id='match_non_ts_pseudo_class.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.match_non_ts_pseudo_class' class='fnname'>match_non_ts_pseudo_class</a>(&amp;self, _pc: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h4 id='method.get_id' class='method'><span id='get_id.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.get_id' class='fnname'>get_id</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../string_cache/atom/struct.Atom.html' title='string_cache::atom::Atom'>Atom</a>&gt;</code></span></h4>
+<h4 id='method.has_class' class='method'><span id='has_class.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.has_class' class='fnname'>has_class</a>(&amp;self, name: &amp;<a class='struct' href='../../string_cache/atom/struct.Atom.html' title='string_cache::atom::Atom'>Atom</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h4 id='method.match_attr' class='method'><span id='match_attr.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.match_attr' class='fnname'>match_attr</a>&lt;F&gt;(&amp;self, attr: &amp;<a class='struct' href='../../selectors/parser/struct.AttrSelector.html' title='selectors::parser::AttrSelector'>AttrSelector</a>, test: F) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></span></code></span></h4>
+<h4 id='method.is_empty' class='method'><span id='is_empty.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Returns whether this element matches <code>:empty</code>. <a href="../../selectors/tree/trait.Element.html#tymethod.is_empty">Read more</a></p>
+</div><h4 id='method.is_root' class='method'><span id='is_root.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.is_root' class='fnname'>is_root</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Returns whether this element matches <code>:root</code>, i.e. whether it is the root element of a document. <a href="../../selectors/tree/trait.Element.html#tymethod.is_root">Read more</a></p>
+</div><h4 id='method.each_class' class='method'><span id='each_class.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#tymethod.each_class' class='fnname'>each_class</a>&lt;F&gt;(&amp;self, callback: F) <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(&amp;<a class='struct' href='../../string_cache/atom/struct.Atom.html' title='string_cache::atom::Atom'>Atom</a>)</span></code></span></h4>
+<h4 id='method.insert_flags' class='method'><span id='insert_flags.v' class='invisible'><code>fn <a href='../../selectors/tree/trait.Element.html#method.insert_flags' class='fnname'>insert_flags</a>(&amp;self, _flags: <a class='struct' href='../../selectors/matching/struct.ElementFlags.html' title='selectors::matching::ElementFlags'>ElementFlags</a>)</code></span></h4>
+<div class='docblock'><p>Add flags to the element. See the <code>ElementFlags</code> docs for details. <a href="../../selectors/tree/trait.Element.html#method.insert_flags">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='../../html5ever/serialize/trait.Serializable.html' title='html5ever::serialize::Serializable'>Serializable</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/serializable.rs.html#8-53' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.serialize' class='method'><span id='serialize.v' class='invisible'><code>fn <a href='../../html5ever/serialize/trait.Serializable.html#tymethod.serialize' class='fnname'>serialize</a>&lt;'w, W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; serializer: &amp;mut <a class='struct' href='../../html5ever/serialize/struct.Serializer.html' title='html5ever::serialize::Serializer'>Serializer</a>&lt;'w, W&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; traversal_scope: <a class='enum' href='../../html5ever/serialize/enum.TraversalScope.html' title='html5ever::serialize::TraversalScope'>TraversalScope</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code></span></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a> for <a class='struct' href='../../scraper/element_ref/struct.ElementRef.html' title='scraper::element_ref::ElementRef'>ElementRef</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/scraper/element_ref/mod.rs.html#77-80' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Target' class='type'><span id='Target.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#associatedtype.Target' class='type'>Target</a> = <a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, <a class='enum' href='../../scraper/node/enum.Node.html' title='scraper::node::Node'>Node</a>&gt;</code></span></h4>
+<div class='docblock'><p>The resulting type after dereferencing</p>
+</div><h4 id='method.deref' class='method'><span id='deref.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#tymethod.deref' class='fnname'>deref</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../ego_tree/struct.NodeRef.html' title='ego_tree::NodeRef'>NodeRef</a>&lt;'a, <a class='enum' href='../../scraper/node/enum.Node.html' title='scraper::node::Node'>Node</a>&gt;</code></span></h4>
+<div class='docblock'><p>The method called to dereference a value</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "scraper";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
