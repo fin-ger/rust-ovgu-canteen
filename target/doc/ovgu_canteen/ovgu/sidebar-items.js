@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Error","The `Error` enum represents several different error types that are used by results in this crate."]],"mod":[["canteen","The `ovgu::canteen` module is able to parse the ovgu canteen website and provide the information as serializable and deserializable structs."]]});
