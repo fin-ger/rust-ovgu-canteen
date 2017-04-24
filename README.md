@@ -5,7 +5,7 @@
 ---
 
 
-## [Documentation](target/doc/ovgu_canteen/)
+## [Documentation](https://fin-ger.github.io/rust-ovgu-canteen/target/doc/ovgu_canteen/)
 
 ## [Overview](https://fin-ger.github.io/rust-ovgu-canteen/)
 
