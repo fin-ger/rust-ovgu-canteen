@@ -7,9 +7,9 @@
 
 ## [Documentation](target/doc/ovgu_canteen/)
 
----
+## [Overview](https://fin-ger.github.io/rust-ovgu-canteen/)
 
-### Current example usage
+## Current example usage
 
 First setup development environment:
 
