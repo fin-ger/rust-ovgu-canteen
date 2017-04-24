@@ -5,13 +5,8 @@
 ---
 
 
-## (Documentation)[target/doc]
+## [Documentation](target/doc)
 
-> TBD
-
-## Overview
-
-> TBD
 
 ### Current example usage
 
