@@ -1,7 +1,7 @@
 [package]
 name = "ovgu-canteen"
 version = "0.0.1"
-authors = ["Fin Christensen <christensen.fin@gmail.com>"]
+authors = ["Fin Christensen"]
 description = "A canteen parser library for the Otto-von-Guericke University Magdeburg."
 documentation = "https://fin-ger.github.io/rust-ovgu-canteen/target/doc/ovgu_canteen/"
 homepage = "https://fin-ger.github.io/rust-ovgu-canteen/"
