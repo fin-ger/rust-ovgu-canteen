@@ -17,13 +17,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 use ovgu;
+use ovgu::canteen::Update;
 use ovgu::canteen::{Additive, Allergenic, Price, Symbol};
 use scraper;
 use std::str::FromStr;
 
 /// A `Meal` holds the meals name, the price, several symbols, additives,
 /// and allergenics.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Meal
 {
     /// The name of the meal.
@@ -106,5 +107,48 @@ impl ovgu::canteen::FromElement for Meal
             additives: additives,
             allergenics: allergenics,
         })
+    }
+}
+
+impl Update for Meal
+{
+    type Err = ovgu::Error;
+    fn update(&mut self, from: &Self) -> Result<(), Self::Err>
+    {
+        self.price.update(&from.price)?;
+
+        for symbol in from.symbols.iter()
+        {
+            if !self.symbols.contains(symbol)
+            {
+                self.symbols.push(symbol.clone());
+            }
+        }
+
+        for additive in from.additives.iter()
+        {
+            if !self.additives.contains(additive)
+            {
+                self.additives.push(additive.clone());
+            }
+        }
+
+        for allergenic in from.allergenics.iter()
+        {
+            if !self.allergenics.contains(allergenic)
+            {
+                self.allergenics.push(allergenic.clone());
+            }
+        }
+
+        Ok(())
+    }
+}
+
+impl PartialEq for Meal
+{
+    fn eq(&self, other: &Self) -> bool
+    {
+        self.name == other.name
     }
 }

@@ -20,7 +20,7 @@ use ovgu;
 use std;
 
 /// This enum represents allergenics that are contained in a meal.
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[allow(missing_docs)]
 pub enum Allergenic
 {

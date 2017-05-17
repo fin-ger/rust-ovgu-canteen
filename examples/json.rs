@@ -19,6 +19,8 @@
 extern crate ovgu_canteen;
 extern crate serde_json;
 
+use std::fs::File;
+use std::io::Read;
 use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
 
 fn main()

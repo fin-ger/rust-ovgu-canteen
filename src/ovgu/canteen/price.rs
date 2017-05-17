@@ -17,10 +17,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 use ovgu;
+use ovgu::canteen::Update;
 use std;
 
 /// This struct represents the price of a meal.
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Price
 {
     /// The price for students.
@@ -73,5 +74,18 @@ impl std::str::FromStr for Price
             staff: price_staff,
             guest: price_guest,
         })
+    }
+}
+
+impl Update for Price
+{
+    type Err = ovgu::Error;
+    fn update(&mut self, from: &Self) -> Result<(), Self::Err>
+    {
+        self.student = from.student;
+        self.staff = from.staff;
+        self.guest = from.guest;
+
+        Ok(())
     }
 }

@@ -1,0 +1,64 @@
+[
+  {
+    "description": "Downstairs",
+    "days": [
+      {
+        "date": "2017-05-17",
+        "meals": [
+          {
+            "name": "Testgericht unten",
+            "price": {
+              "student": 2.8,
+              "staff": 4.0,
+              "guest": 4.8
+            },
+            "symbols": [
+              "Poultry"
+            ],
+            "additives": [
+              "Sweetener"
+            ],
+            "allergenics": [
+              "Wheat",
+              "Barley",
+              "Egg",
+              "Soya",
+              "Lactose",
+              "Celery",
+              "Sesame"
+            ]
+          }
+        ],
+        "side_dishes": []
+      }
+    ]
+  },
+  {
+    "description": "Upstairs",
+    "days": [
+      {
+        "date": "2017-05-17",
+        "meals": [
+          {
+            "name": "Testgericht oben",
+            "price": {
+              "student": 1.45,
+              "staff": 2.5,
+              "guest": 3.2
+            },
+            "symbols": [
+              "Garlic",
+              "Lamb"
+            ],
+            "additives": [],
+            "allergenics": [
+              "Wheat",
+              "Lactose"
+            ]
+          }
+        ],
+        "side_dishes": []
+      }
+    ]
+  }
+]

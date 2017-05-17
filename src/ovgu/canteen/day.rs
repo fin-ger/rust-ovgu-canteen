@@ -19,10 +19,11 @@
 use chrono;
 use ovgu;
 use ovgu::canteen::Meal;
+use ovgu::canteen::Update;
 use scraper;
 
 /// A `Day` holds all the meals that are available at the given day.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Day
 {
     /// The date of thsi day.
@@ -77,5 +78,48 @@ impl ovgu::canteen::FromElement for Day
             meals: meals,
             side_dishes: side_dishes,
         })
+    }
+}
+
+impl Update for Day
+{
+    type Err = ovgu::Error;
+    fn update(&mut self, from: &Self) -> Result<(), Self::Err>
+    {
+        for meal in from.meals.iter()
+        {
+            if match self.meals.iter_mut().find(|m| *m == meal)
+            {
+                Some(ref mut m) =>
+                {
+                    m.update(meal)?;
+                    false
+                }
+                None =>
+                {
+                    true
+                }
+            } {
+                self.meals.push(meal.clone());
+            }
+        }
+
+        for side_dish in from.side_dishes.iter()
+        {
+            if !self.side_dishes.contains(side_dish)
+            {
+                self.side_dishes.push(side_dish.clone());
+            }
+        }
+
+        Ok(())
+    }
+}
+
+impl PartialEq for Day
+{
+    fn eq(&self, other: &Self) -> bool
+    {
+        self.date == other.date
     }
 }

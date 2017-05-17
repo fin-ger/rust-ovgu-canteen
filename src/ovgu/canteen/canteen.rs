@@ -20,9 +20,11 @@ use hyper;
 use hyper_native_tls;
 use ovgu;
 use ovgu::canteen::FromElement;
+use ovgu::canteen::Update;
 use scraper;
 
 use std::io::Read;
+use std::clone::Clone;
 
 /// A canteen holds all the meals on all available days.
 #[derive(Serialize, Deserialize, Debug)]
@@ -36,7 +38,7 @@ pub struct Canteen
 }
 
 /// This enum identifies a canteen.
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum CanteenDescription
 {
     /// The canteen located downstairs.
@@ -66,6 +68,41 @@ impl Canteen
     /// ```
     pub fn new(desc: CanteenDescription) -> Result<Self, ovgu::Error>
     {
+        let days = Self::load(desc.clone())?;
+        Ok(Canteen {
+            description: desc,
+            days: days,
+        })
+    }
+
+    /// This method updates the canteen from the website.
+    pub fn update(&mut self) -> Result<(), ovgu::Error>
+    {
+        let days = Self::load(self.description.clone())?;
+
+        for day in days.iter()
+        {
+            if match self.days.iter_mut().find(|d| *d == day)
+            {
+                Some(ref mut d) =>
+                {
+                    d.update(day)?;
+                    false
+                }
+                None =>
+                {
+                    true
+                }
+            } {
+                self.days.push(day.clone());
+            }
+        }
+
+        Ok(())
+    }
+
+    fn load(desc: CanteenDescription) -> Result<Vec<ovgu::canteen::Day>, ovgu::Error>
+    {
         let ssl = hyper_native_tls::NativeTlsClient::new()
             .map_err(|e| ovgu::Error::Creation(
                 "NativeTlsClient", "hyper".to_owned(), Some(Box::new(e))
@@ -89,14 +126,17 @@ impl Canteen
             .read_to_string(&mut body)
             .map_err(|e| ovgu::Error::InvalidValue("HTML for", "website", Some(Box::new(e))))?;
 
-        let days = scraper::Html::parse_document(&body)
+        scraper::Html::parse_document(&body)
             .select(&ovgu_canteen_selector![day])
             .map(|day_node| ovgu::canteen::Day::from_element(&day_node))
-            .collect::<Result<Vec<ovgu::canteen::Day>, ovgu::Error>>()?;
+            .collect::<Result<Vec<ovgu::canteen::Day>, ovgu::Error>>()
+    }
+}
 
-        Ok(Canteen {
-            description: desc,
-            days: days,
-        })
+impl PartialEq for Canteen
+{
+    fn eq(&self, other: &Self) -> bool
+    {
+        self.description == other.description
     }
 }

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -88,51 +88,51 @@
 <span id="43">43</span>
 <span id="44">44</span>
 <span id="45">45</span>
-</pre><pre class='rust '>
-<span class='comment'>// libovgu-canteen - A canteen parser module for ovgu.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Copyright (C) 2017</span>
-<span class='comment'>//     Fin Christensen &lt;christensen.fin@gmail.com&gt;</span>
-<span class='comment'>//</span>
-<span class='comment'>// This program is free software: you can redistribute it and/or modify</span>
-<span class='comment'>// it under the terms of the GNU General Public License as published by</span>
-<span class='comment'>// the Free Software Foundation, either version 3 of the License, or</span>
-<span class='comment'>// (at your option) any later version.</span>
-<span class='comment'>//</span>
-<span class='comment'>// This program is distributed in the hope that it will be useful,</span>
-<span class='comment'>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class='comment'>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class='comment'>// GNU General Public License for more details.</span>
-<span class='comment'>//</span>
-<span class='comment'>// You should have received a copy of the GNU General Public License</span>
-<span class='comment'>// along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+</pre><pre class="rust ">
+<span class="comment">// libovgu-canteen - A canteen parser module for ovgu.</span>
+<span class="comment">//</span>
+<span class="comment">// Copyright (C) 2017</span>
+<span class="comment">//     Fin Christensen &lt;christensen.fin@gmail.com&gt;</span>
+<span class="comment">//</span>
+<span class="comment">// This program is free software: you can redistribute it and/or modify</span>
+<span class="comment">// it under the terms of the GNU General Public License as published by</span>
+<span class="comment">// the Free Software Foundation, either version 3 of the License, or</span>
+<span class="comment">// (at your option) any later version.</span>
+<span class="comment">//</span>
+<span class="comment">// This program is distributed in the hope that it will be useful,</span>
+<span class="comment">// but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="comment">// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="comment">// GNU General Public License for more details.</span>
+<span class="comment">//</span>
+<span class="comment">// You should have received a copy of the GNU General Public License</span>
+<span class="comment">// along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>base_url</span> {
-    [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub</span>:<span class='ident'>tt</span>] <span class='op'>=&gt;</span> {
-        <span class='macro'>concat</span><span class='macro'>!</span>(<span class='string'>&quot;https://www.studentenwerk-magdeburg.de/mensen-cafeterien/&quot;</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub</span>)
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">base_url</span> {
+    [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>:<span class="ident">tt</span>] <span class="op">=&gt;</span> {
+        <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;https://www.studentenwerk-magdeburg.de/mensen-cafeterien/&quot;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>ovgu_canteen_url</span> {
-    [<span class='ident'>downstairs</span>] <span class='op'>=&gt;</span> ( <span class='macro'>base_url</span><span class='macro'>!</span>[<span class='string'>&quot;mensa-unicampus/speiseplan-unten/&quot;</span>] );
-    [<span class='ident'>upstairs</span>] <span class='op'>=&gt;</span> ( <span class='macro'>base_url</span><span class='macro'>!</span>[<span class='string'>&quot;mensa-unicampus/speiseplan-oben/&quot;</span>] );
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ovgu_canteen_url</span> {
+    [<span class="ident">downstairs</span>] <span class="op">=&gt;</span> ( <span class="macro">base_url</span><span class="macro">!</span>[<span class="string">&quot;mensa-unicampus/speiseplan-unten/&quot;</span>] );
+    [<span class="ident">upstairs</span>] <span class="op">=&gt;</span> ( <span class="macro">base_url</span><span class="macro">!</span>[<span class="string">&quot;mensa-unicampus/speiseplan-oben/&quot;</span>] );
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>parse_and_unwrap_selector</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sel</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> ( ::<span class='ident'>scraper</span>::<span class='ident'>Selector</span>::<span class='ident'>parse</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sel</span>).<span class='ident'>unwrap</span>() )
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">parse_and_unwrap_selector</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">sel</span>:<span class="ident">tt</span>) <span class="op">=&gt;</span> ( ::<span class="ident">scraper</span>::<span class="ident">Selector</span>::<span class="ident">parse</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">sel</span>).<span class="ident">unwrap</span>() )
 }
 
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>ovgu_canteen_selector</span> {
-    [<span class='ident'>day</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;.mensa &gt; table&quot;</span>) );
-    [<span class='ident'>date</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;thead &gt; tr &gt; td&quot;</span>) );
-    [<span class='ident'>side_dishes</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;tbody &gt; tr:last-of-type &gt; td&quot;</span>) );
-    [<span class='ident'>meal</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;tbody &gt; tr:not(:last-of-type)&quot;</span>) );
-    [<span class='ident'>name</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;td:nth-of-type(1) &gt; strong&quot;</span>) );
-    [<span class='ident'>price</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;td:nth-of-type(1)&quot;</span>) );
-    [<span class='ident'>symbols</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;td:nth-of-type(2) &gt; div &gt; img&quot;</span>) );
-    [<span class='ident'>notes</span>] <span class='op'>=&gt;</span> ( <span class='macro'>parse_and_unwrap_selector</span><span class='macro'>!</span>(<span class='string'>&quot;td:nth-of-type(2) &gt; div:nth-of-type(2)&quot;</span>) );
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ovgu_canteen_selector</span> {
+    [<span class="ident">day</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;.mensa &gt; table&quot;</span>) );
+    [<span class="ident">date</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;thead &gt; tr &gt; td&quot;</span>) );
+    [<span class="ident">side_dishes</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;tbody &gt; tr:last-of-type &gt; td&quot;</span>) );
+    [<span class="ident">meal</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;tbody &gt; tr:not(:last-of-type)&quot;</span>) );
+    [<span class="ident">name</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;td:nth-of-type(1) &gt; strong&quot;</span>) );
+    [<span class="ident">price</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;td:nth-of-type(1)&quot;</span>) );
+    [<span class="ident">symbols</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;td:nth-of-type(2) &gt; div &gt; img&quot;</span>) );
+    [<span class="ident">notes</span>] <span class="op">=&gt;</span> ( <span class="macro">parse_and_unwrap_selector</span><span class="macro">!</span>(<span class="string">&quot;td:nth-of-type(2) &gt; div:nth-of-type(2)&quot;</span>) );
 }
 </pre>
 </section>

@@ -16,22 +16,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use scraper;
+extern crate ovgu_canteen;
+extern crate serde_json;
 
-/// This trait is used to create an instance from a HTML element reference.
-pub trait FromElement: Sized
+use std::fs::File;
+use std::io::Read;
+use ovgu_canteen::ovgu::canteen::{Canteen};
+
+fn main()
 {
-    /// This is the error type used when the creation from a HTML element fails.
-    type Err;
+    let mut file = File::open("examples/canteens.json").unwrap();
+    let mut serialization = String::new();
+    file.read_to_string(&mut serialization).unwrap();
 
-    /// Create an instance of `Self` from a HTML element reference.
-    ///
-    /// # Arguments
-    ///
-    /// `e`  - The HTML element reference.
-    ///
-    /// # Returns
-    ///
-    /// A result containing an instance of `Self` or an error.
-    fn from_element(e: &scraper::ElementRef) -> Result<Self, Self::Err>;
+    let mut canteens: Vec<Canteen> = serde_json::from_str(&serialization).unwrap();
+    for canteen in canteens.iter_mut()
+    {
+        canteen.update().unwrap();
+    }
+
+    serde_json::to_writer_pretty(&mut std::io::stdout(), &canteens).unwrap();
+    println!();
 }

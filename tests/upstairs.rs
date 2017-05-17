@@ -26,7 +26,8 @@ use chrono::TimeZone;
 fn canteen_upstairs()
 {
     // test if parsing is working
-    let canteen = Canteen::new(CanteenDescription::Upstairs).unwrap();
+    let mut canteen = Canteen::new(CanteenDescription::Upstairs).unwrap();
+    canteen.update().unwrap();
 
     assert_eq!(canteen.description, CanteenDescription::Upstairs);
     assert!(canteen.days.len() > 0);

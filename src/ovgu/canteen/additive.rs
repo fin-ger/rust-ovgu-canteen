@@ -20,7 +20,7 @@ use ovgu;
 use std;
 
 /// An `Additive` is used to represent additives of a meal.
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[allow(missing_docs)]
 pub enum Additive
 {
