@@ -22,8 +22,7 @@ use std;
 /// This enum represents symbols a meal is annotated with.
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[allow(missing_docs)]
-pub enum Symbol
-{
+pub enum Symbol {
     Pig,
     Cattle,
     Poultry,
@@ -40,13 +39,10 @@ pub enum Symbol
     AnimalWelfare,
 }
 
-impl std::str::FromStr for Symbol
-{
+impl std::str::FromStr for Symbol {
     type Err = ovgu::Error;
-    fn from_str(s: &str) -> Result<Self, Self::Err>
-    {
-        match s
-        {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
             "Symbol Schwein" => Ok(Symbol::Pig),
             "Symbol Rind" => Ok(Symbol::Cattle),
             "Symbol Geflügel" => Ok(Symbol::Poultry),

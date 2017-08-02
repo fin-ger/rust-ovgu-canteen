@@ -22,7 +22,6 @@ use ovgu::canteen::Allergenic;
 use std::str::FromStr;
 
 #[test]
-fn from_str()
-{
+fn from_str() {
     assert_eq!(Allergenic::from_str("(h6)").unwrap(), Allergenic::BrazilNut);
 }

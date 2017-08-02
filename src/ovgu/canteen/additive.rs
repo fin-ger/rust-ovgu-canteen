@@ -22,8 +22,7 @@ use std;
 /// An `Additive` is used to represent additives of a meal.
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[allow(missing_docs)]
-pub enum Additive
-{
+pub enum Additive {
     FoodColoring,
     FoodPreservatives,
     AntiOxidants,
@@ -47,13 +46,10 @@ pub enum Additive
 ///
 /// let additive = Additive::from_str("(2)");
 /// ```
-impl std::str::FromStr for Additive
-{
+impl std::str::FromStr for Additive {
     type Err = ovgu::Error;
-    fn from_str(s: &str) -> Result<Self, Self::Err>
-    {
-        match s
-        {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
             "(1)" => Ok(Additive::FoodColoring),
             "(2)" => Ok(Additive::FoodPreservatives),
             "(3)" => Ok(Additive::AntiOxidants),

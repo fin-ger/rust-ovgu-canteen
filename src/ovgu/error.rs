@@ -21,8 +21,7 @@ use std;
 /// The `Error` enum represents several different error types that are used
 /// by results in this crate.
 #[derive(Debug)]
-pub enum Error
-{
+pub enum Error {
     /// This error is used when a creation of something failed.
     ///
     ///  * The first parameter is used to define *what* failed to create.
@@ -73,53 +72,46 @@ pub enum Error
     /// use ovgu_canteen::ovgu::Error;
     ///
     /// let data = String::from("42");
-    /// let number = data.parse::<f32>().map_err(|e| Error::InvalidValue("number", "data", Some(Box::new(e))));
+    /// let number = data.parse::<f32>()
+    ///     .map_err(|e| Error::InvalidValue("number", "data", Some(Box::new(e))));
     /// ```
     InvalidValue(&'static str, &'static str, Option<Box<std::error::Error>>),
 }
 
-impl std::fmt::Display for Error
-{
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result
-    {
-        match *self
-        {
-            Error::Creation(ref what, ref input, ref err) =>
-            {
-                match *err
-                {
-                    Some(ref err_box) =>
-                    {
-                        write!(f,
-                               "Error creating {} from '{}' - Reason: {}",
-                               what,
-                               input,
-                               err_box)
+impl std::fmt::Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match *self {
+            Error::Creation(ref what, ref input, ref err) => {
+                match *err {
+                    Some(ref err_box) => {
+                        write!(
+                            f,
+                            "Error creating {} from '{}' - Reason: {}",
+                            what,
+                            input,
+                            err_box
+                        )
                     }
                     None => write!(f, "Error creating {} from '{}'!", what, input),
                 }
             }
-            Error::NotAvailable(ref what, ref thing, ref err) =>
-            {
-                match *err
-                {
-                    Some(ref err_box) =>
-                    {
-                        write!(f,
-                               "Error {} is unavailable for {} - Reason: {}",
-                               what,
-                               thing,
-                               err_box)
+            Error::NotAvailable(ref what, ref thing, ref err) => {
+                match *err {
+                    Some(ref err_box) => {
+                        write!(
+                            f,
+                            "Error {} is unavailable for {} - Reason: {}",
+                            what,
+                            thing,
+                            err_box
+                        )
                     }
                     None => write!(f, "Error {} is unavailable for {}!", what, thing),
                 }
             }
-            Error::InvalidValue(ref what, ref val, ref err) =>
-            {
-                match *err
-                {
-                    Some(ref err_box) =>
-                    {
+            Error::InvalidValue(ref what, ref val, ref err) => {
+                match *err {
+                    Some(ref err_box) => {
                         write!(f, "Error parsing {} '{}' - Reason: {}", what, val, err_box)
                     }
                     None => write!(f, "Error parsing {} '{}'!", what, val),
@@ -129,12 +121,9 @@ impl std::fmt::Display for Error
     }
 }
 
-impl std::error::Error for Error
-{
-    fn description(&self) -> &str
-    {
-        match *self
-        {
+impl std::error::Error for Error {
+    fn description(&self) -> &str {
+        match *self {
             Error::Creation(..) => "Cannot create instance",
             Error::NotAvailable(..) => "Cannot find requested value",
             Error::InvalidValue(..) => "Cannot parse given value",

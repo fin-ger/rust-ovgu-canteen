@@ -22,8 +22,7 @@ use std;
 /// This enum represents allergenics that are contained in a meal.
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[allow(missing_docs)]
-pub enum Allergenic
-{
+pub enum Allergenic {
     Wheat,
     Rye,
     Barley,
@@ -53,13 +52,10 @@ pub enum Allergenic
     Mollusc,
 }
 
-impl std::str::FromStr for Allergenic
-{
+impl std::str::FromStr for Allergenic {
     type Err = ovgu::Error;
-    fn from_str(s: &str) -> Result<Self, Self::Err>
-    {
-        match s
-        {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
             "(a1)" => Ok(Allergenic::Wheat),
             "(a2)" => Ok(Allergenic::Rye),
             "(a3)" => Ok(Allergenic::Barley),

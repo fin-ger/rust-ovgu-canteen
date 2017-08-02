@@ -19,8 +19,7 @@
 use scraper;
 
 /// This trait is used to create an instance from a HTML element reference.
-pub trait FromElement: Sized
-{
+pub trait FromElement: Sized {
     /// This is the error type used when the creation from a HTML element fails.
     type Err;
 
@@ -37,8 +36,7 @@ pub trait FromElement: Sized
 }
 
 /// This trait is used to update the data of an instance.
-pub trait Update: Sized
-{
+pub trait Update: Sized {
     /// This is the error type used when the update fails.
     type Err;
 

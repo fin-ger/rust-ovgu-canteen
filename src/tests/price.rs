@@ -22,8 +22,11 @@ use ovgu::canteen::Price;
 use std::str::FromStr;
 
 #[test]
-fn from_str()
-{
-    let price = Price { student: 1.40, staff: 2.50, guest: 3.60 };
+fn from_str() {
+    let price = Price {
+        student: 1.40,
+        staff: 2.50,
+        guest: 3.60,
+    };
     assert_eq!(Price::from_str("1,40 | 2,50 | 3,60").unwrap(), price);
 }

@@ -22,7 +22,6 @@ use ovgu::canteen::Symbol;
 use std::str::FromStr;
 
 #[test]
-fn from_str()
-{
+fn from_str() {
     assert_eq!(Symbol::from_str("Symbol Rind").unwrap(), Symbol::Cattle);
 }

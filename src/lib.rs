@@ -20,10 +20,14 @@
 extern crate serde_derive;
 
 extern crate hyper;
-extern crate hyper_native_tls;
+extern crate hyper_openssl;
+extern crate tokio_core;
 extern crate scraper;
 extern crate chrono;
 extern crate serde;
+extern crate num_cpus;
+extern crate openssl;
+extern crate futures;
 
 #[macro_use]
 pub mod ovgu;

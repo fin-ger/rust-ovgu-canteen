@@ -24,8 +24,7 @@ use scraper;
 
 /// A `Day` holds all the meals that are available at the given day.
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Day
-{
+pub struct Day {
     /// The date of thsi day.
     pub date: chrono::NaiveDate,
 
@@ -36,11 +35,9 @@ pub struct Day
     pub side_dishes: Vec<String>,
 }
 
-impl ovgu::canteen::FromElement for Day
-{
+impl ovgu::canteen::FromElement for Day {
     type Err = ovgu::Error;
-    fn from_element(day_node: &scraper::ElementRef) -> Result<Self, Self::Err>
-    {
+    fn from_element(day_node: &scraper::ElementRef) -> Result<Self, Self::Err> {
         let date = day_node
             .select(&ovgu_canteen_selector![date])
             .next()
@@ -48,7 +45,9 @@ impl ovgu::canteen::FromElement for Day
             .ok_or(ovgu::Error::NotAvailable("date", "day", None))
             .and_then(|date_str| {
                 chrono::NaiveDate::parse_from_str(&date_str[date_str.len() - 10..], "%d.%m.%Y")
-                    .map_err(|e| ovgu::Error::InvalidValue("date", "day", Some(Box::new(e))))
+                    .map_err(|e| {
+                        ovgu::Error::InvalidValue("date", "day", Some(Box::new(e)))
+                    })
             })?;
 
         // we create meals from a given html node
@@ -81,33 +80,24 @@ impl ovgu::canteen::FromElement for Day
     }
 }
 
-impl Update for Day
-{
+impl Update for Day {
     type Err = ovgu::Error;
-    fn update(&mut self, from: &Self) -> Result<(), Self::Err>
-    {
-        for meal in from.meals.iter()
-        {
-            if match self.meals.iter_mut().find(|m| *m == meal)
-            {
-                Some(ref mut m) =>
-                {
+    fn update(&mut self, from: &Self) -> Result<(), Self::Err> {
+        for meal in from.meals.iter() {
+            if match self.meals.iter_mut().find(|m| *m == meal) {
+                Some(ref mut m) => {
                     m.update(meal)?;
                     false
                 }
-                None =>
-                {
-                    true
-                }
-            } {
+                None => true,
+            }
+            {
                 self.meals.push(meal.clone());
             }
         }
 
-        for side_dish in from.side_dishes.iter()
-        {
-            if !self.side_dishes.contains(side_dish)
-            {
+        for side_dish in from.side_dishes.iter() {
+            if !self.side_dishes.contains(side_dish) {
                 self.side_dishes.push(side_dish.clone());
             }
         }
@@ -116,10 +106,8 @@ impl Update for Day
     }
 }
 
-impl PartialEq for Day
-{
-    fn eq(&self, other: &Self) -> bool
-    {
+impl PartialEq for Day {
+    fn eq(&self, other: &Self) -> bool {
         self.date == other.date
     }
 }

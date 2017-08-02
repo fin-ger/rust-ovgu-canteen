@@ -19,19 +19,17 @@
 extern crate ovgu_canteen;
 extern crate serde_json;
 
+use ovgu_canteen::ovgu::canteen::Canteen;
 use std::fs::File;
 use std::io::Read;
-use ovgu_canteen::ovgu::canteen::{Canteen};
 
-fn main()
-{
+fn main() {
     let mut file = File::open("examples/canteens.json").unwrap();
     let mut serialization = String::new();
     file.read_to_string(&mut serialization).unwrap();
 
     let mut canteens: Vec<Canteen> = serde_json::from_str(&serialization).unwrap();
-    for canteen in canteens.iter_mut()
-    {
+    for canteen in canteens.iter_mut() {
         canteen.update().unwrap();
     }
 

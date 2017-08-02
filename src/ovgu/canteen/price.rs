@@ -22,8 +22,7 @@ use std;
 
 /// This struct represents the price of a meal.
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
-pub struct Price
-{
+pub struct Price {
     /// The price for students.
     pub student: f32,
 
@@ -34,11 +33,9 @@ pub struct Price
     pub guest: f32,
 }
 
-impl std::str::FromStr for Price
-{
+impl std::str::FromStr for Price {
     type Err = ovgu::Error;
-    fn from_str(s: &str) -> Result<Self, Self::Err>
-    {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let replaced = str::replace(s, ",", ".");
         let mut split = replaced.split(" | ");
 
@@ -77,11 +74,9 @@ impl std::str::FromStr for Price
     }
 }
 
-impl Update for Price
-{
+impl Update for Price {
     type Err = ovgu::Error;
-    fn update(&mut self, from: &Self) -> Result<(), Self::Err>
-    {
+    fn update(&mut self, from: &Self) -> Result<(), Self::Err> {
         self.student = from.student;
         self.staff = from.staff;
         self.guest = from.guest;

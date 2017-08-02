@@ -16,20 +16,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+use std;
 use hyper;
-use hyper_native_tls;
+use hyper_openssl;
 use ovgu;
 use ovgu::canteen::FromElement;
 use ovgu::canteen::Update;
 use scraper;
-
-use std::io::Read;
 use std::clone::Clone;
+use tokio_core::reactor::Core;
+use num_cpus;
+use openssl;
+use futures::future::Future;
+use futures::Stream;
 
 /// A canteen holds all the meals on all available days.
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Canteen
-{
+pub struct Canteen {
     /// This identifies a canteen.
     pub description: CanteenDescription,
 
@@ -39,8 +42,7 @@ pub struct Canteen
 
 /// This enum identifies a canteen.
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
-pub enum CanteenDescription
-{
+pub enum CanteenDescription {
     /// The canteen located downstairs.
     Downstairs,
 
@@ -48,8 +50,7 @@ pub enum CanteenDescription
     Upstairs,
 }
 
-impl Canteen
-{
+impl Canteen {
     /// This method creates a new canteen instance from a given description.
     ///
     /// # Arguments
@@ -66,8 +67,7 @@ impl Canteen
     /// let canteen = Canteen::new(CanteenDescription::Downstairs).unwrap();
     /// println!("{}", canteen.days[0].meals[0].name);
     /// ```
-    pub fn new(desc: CanteenDescription) -> Result<Self, ovgu::Error>
-    {
+    pub fn new(desc: CanteenDescription) -> Result<Self, ovgu::Error> {
         let days = Self::load(desc.clone())?;
         Ok(Canteen {
             description: desc,
@@ -76,24 +76,18 @@ impl Canteen
     }
 
     /// This method updates the canteen from the website.
-    pub fn update(&mut self) -> Result<(), ovgu::Error>
-    {
+    pub fn update(&mut self) -> Result<(), ovgu::Error> {
         let days = Self::load(self.description.clone())?;
 
-        for day in days.iter()
-        {
-            if match self.days.iter_mut().find(|d| *d == day)
-            {
-                Some(ref mut d) =>
-                {
+        for day in days.iter() {
+            if match self.days.iter_mut().find(|d| *d == day) {
+                Some(ref mut d) => {
                     d.update(day)?;
                     false
                 }
-                None =>
-                {
-                    true
-                }
-            } {
+                None => true,
+            }
+            {
                 self.days.push(day.clone());
             }
         }
@@ -101,30 +95,24 @@ impl Canteen
         Ok(())
     }
 
-    fn load(desc: CanteenDescription) -> Result<Vec<ovgu::canteen::Day>, ovgu::Error>
-    {
-        let ssl = hyper_native_tls::NativeTlsClient::new()
-            .map_err(|e| ovgu::Error::Creation(
-                "NativeTlsClient", "hyper".to_owned(), Some(Box::new(e))
-            ))?;
+    fn load(desc: CanteenDescription) -> Result<Vec<ovgu::canteen::Day>, ovgu::Error> {
+        let mut core = Core::new()
+            .map_err(|e| ovgu::Error::Creation("Core", "tokio-core".to_owned(), Some(Box::new(e))))?;
 
-        let connector = hyper::net::HttpsConnector::new(ssl);
-        let client = hyper::Client::with_connector(connector);
-        let mut body = String::new();
-        let mut response = client
-            .get(
-                match desc
-                {
-                    CanteenDescription::Downstairs => ovgu_canteen_url![downstairs],
-                    CanteenDescription::Upstairs => ovgu_canteen_url![upstairs],
-                }
-            )
-            .send()
-            .map_err(|e| ovgu::Error::NotAvailable("website", "canteen", Some(Box::new(e))))?;
+        let connector = hyper_openssl::HttpsConnector::new(num_cpus::get(), &core.handle())
+            .map_err(|e: openssl::error::ErrorStack| ovgu::Error::Creation("HttpsConnector", "connector".to_owned(), Some(Box::new(e))))?;
+        let client = hyper::Client::configure()
+            .connector(connector)
+            .build(&core.handle());
 
-        response
-            .read_to_string(&mut body)
-            .map_err(|e| ovgu::Error::InvalidValue("HTML for", "website", Some(Box::new(e))))?;
+        let uri = match desc {
+            CanteenDescription::Downstairs => ovgu_canteen_url![downstairs],
+            CanteenDescription::Upstairs => ovgu_canteen_url![upstairs],
+        }.parse().map_err(|e: hyper::error::UriError| ovgu::Error::Creation("parse", "uri".to_owned(), Some(Box::new(e))))?;
+
+        let work = client.get(uri).and_then(|res| res.body().concat2());
+        let chunks = core.run(work).map_err(|e| ovgu::Error::Creation("get", "body".to_owned(), Some(Box::new(e))))?;
+        let body = std::str::from_utf8(&chunks).map_err(|e| ovgu::Error::Creation("body", "chunks".to_owned(), Some(Box::new(e))))?;
 
         scraper::Html::parse_document(&body)
             .select(&ovgu_canteen_selector![day])
@@ -133,10 +121,8 @@ impl Canteen
     }
 }
 
-impl PartialEq for Canteen
-{
-    fn eq(&self, other: &Self) -> bool
-    {
+impl PartialEq for Canteen {
+    fn eq(&self, other: &Self) -> bool {
         self.description == other.description
     }
 }

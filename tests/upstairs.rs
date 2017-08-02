@@ -19,12 +19,11 @@
 extern crate ovgu_canteen;
 extern crate chrono;
 
-use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
 use chrono::TimeZone;
+use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
 
 #[test]
-fn canteen_upstairs()
-{
+fn canteen_upstairs() {
     // test if parsing is working
     let mut canteen = Canteen::new(CanteenDescription::Upstairs).unwrap();
     canteen.update().unwrap();
@@ -32,13 +31,11 @@ fn canteen_upstairs()
     assert_eq!(canteen.description, CanteenDescription::Upstairs);
     assert!(canteen.days.len() > 0);
 
-    for day in canteen.days
-    {
+    for day in canteen.days {
         // this is not quite correct as the local timezone may not be summer time aware MEZ
         assert!(chrono::Local::today() <= chrono::Local.from_local_date(&day.date).unwrap());
 
-        for meal in day.meals
-        {
+        for meal in day.meals {
             assert!(meal.name.len() > 0);
 
             assert!(0f32 < meal.price.student);
@@ -46,8 +43,7 @@ fn canteen_upstairs()
             assert!(meal.price.staff <= meal.price.guest);
         }
 
-        for side_dish in day.side_dishes
-        {
+        for side_dish in day.side_dishes {
             assert!(side_dish.len() > 0);
         }
     }

@@ -1,9 +1,9 @@
 [package]
 name = "ovgu-canteen"
-version = "0.0.3"
+version = "0.0.4"
 authors = ["Fin Christensen"]
 description = "A canteen parser library for the Otto-von-Guericke University Magdeburg."
-documentation = "https://fin-ger.github.io/rust-ovgu-canteen/target/doc/ovgu_canteen/"
+documentation = "https://docs.rs/ovgu-canteen/"
 homepage = "https://fin-ger.github.io/rust-ovgu-canteen/"
 repository = "https://github.com/fin-ger/rust-ovgu-canteen/"
 readme = "README.md"
@@ -14,10 +14,14 @@ license = "GPL-3.0"
 [dependencies]
 scraper = "^0"
 hyper = "^0"
-hyper-native-tls = "^0"
+hyper-openssl = "^0"
+tokio-core = "^0"
 chrono = { version = "^0", features = ["serde"] }
 serde = "^1"
 serde_derive = "^1"
+num_cpus = "^0"
+openssl = "^0"
+futures = "^0"
 
 [dev-dependencies]
 serde_json = "^1"

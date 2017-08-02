@@ -22,7 +22,6 @@ use ovgu::canteen::Additive;
 use std::str::FromStr;
 
 #[test]
-fn from_str()
-{
+fn from_str() {
     assert_eq!(Additive::from_str("(9)").unwrap(), Additive::Sweetener);
 }
