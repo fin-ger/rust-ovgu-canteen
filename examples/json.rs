@@ -19,7 +19,7 @@
 extern crate ovgu_canteen;
 extern crate serde_json;
 
-use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
+use ovgu_canteen::{Canteen, CanteenDescription};
 
 fn main() {
     let canteens = vec![

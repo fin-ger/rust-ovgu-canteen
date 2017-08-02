@@ -18,7 +18,7 @@
 
 //! This module contains unit tests for `ovgu::canteen::Additive`.
 
-use ovgu::canteen::Additive;
+use Additive;
 use std::str::FromStr;
 
 #[test]

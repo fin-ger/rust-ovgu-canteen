@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use ovgu;
+use Error;
 use std;
 
 /// An `Additive` is used to represent additives of a meal.
@@ -41,13 +41,13 @@ pub enum Additive {
 /// # Examples
 ///
 /// ```
-/// use ovgu_canteen::ovgu::canteen::Additive;
+/// use ovgu_canteen::Additive;
 /// use std::str::FromStr;
 ///
 /// let additive = Additive::from_str("(2)");
 /// ```
 impl std::str::FromStr for Additive {
-    type Err = ovgu::Error;
+    type Err = Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "(1)" => Ok(Additive::FoodColoring),
@@ -60,7 +60,7 @@ impl std::str::FromStr for Additive {
             "(8)" => Ok(Additive::Phosphates),
             "(9)" => Ok(Additive::Sweetener),
             "(10)" => Ok(Additive::Phenylalanine),
-            _ => Err(ovgu::Error::Creation("additive", s.to_owned(), None)),
+            _ => Err(Error::Creation("additive", s.to_owned(), None)),
         }
     }
 }

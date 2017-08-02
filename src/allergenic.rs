@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use ovgu;
+use Error;
 use std;
 
 /// This enum represents allergenics that are contained in a meal.
@@ -53,7 +53,7 @@ pub enum Allergenic {
 }
 
 impl std::str::FromStr for Allergenic {
-    type Err = ovgu::Error;
+    type Err = Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "(a1)" => Ok(Allergenic::Wheat),
@@ -83,7 +83,7 @@ impl std::str::FromStr for Allergenic {
             "(l)" => Ok(Allergenic::Sulphite),
             "(m)" => Ok(Allergenic::Lupin),
             "(n)" => Ok(Allergenic::Mollusc),
-            _ => Err(ovgu::Error::Creation("allergenic", s.to_owned(), None)),
+            _ => Err(Error::Creation("allergenic", s.to_owned(), None)),
         }
     }
 }

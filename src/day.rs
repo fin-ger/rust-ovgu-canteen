@@ -16,10 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+use {Error, FromElement, Meal, Update};
 use chrono;
-use ovgu;
-use ovgu::canteen::Meal;
-use ovgu::canteen::Update;
 use scraper;
 
 /// A `Day` holds all the meals that are available at the given day.
@@ -35,19 +33,17 @@ pub struct Day {
     pub side_dishes: Vec<String>,
 }
 
-impl ovgu::canteen::FromElement for Day {
-    type Err = ovgu::Error;
+impl FromElement for Day {
+    type Err = Error;
     fn from_element(day_node: &scraper::ElementRef) -> Result<Self, Self::Err> {
         let date = day_node
             .select(&ovgu_canteen_selector![date])
             .next()
             .and_then(|node| node.text().next())
-            .ok_or(ovgu::Error::NotAvailable("date", "day", None))
+            .ok_or(Error::NotAvailable("date", "day", None))
             .and_then(|date_str| {
                 chrono::NaiveDate::parse_from_str(&date_str[date_str.len() - 10..], "%d.%m.%Y")
-                    .map_err(|e| {
-                        ovgu::Error::InvalidValue("date", "day", Some(Box::new(e)))
-                    })
+                    .map_err(|e| Error::InvalidValue("date", "day", Some(Box::new(e))))
             })?;
 
         // we create meals from a given html node
@@ -57,13 +53,13 @@ impl ovgu::canteen::FromElement for Day {
         let meals = day_node
             .select(&ovgu_canteen_selector![meal])
             .map(|meal_node| Meal::from_element(&meal_node))
-            .collect::<Result<Vec<Meal>, ovgu::Error>>()?;
+            .collect::<Result<Vec<Meal>, Error>>()?;
 
         let side_dishes = day_node
             .select(&ovgu_canteen_selector![side_dishes])
             .next()
             .and_then(|node| node.text().next())
-            .ok_or(ovgu::Error::NotAvailable("side_dishes", "day", None))
+            .ok_or(Error::NotAvailable("side_dishes", "day", None))
             .map(|side_dishes_str| {
                 side_dishes_str[10..]
                     .trim()
@@ -81,7 +77,7 @@ impl ovgu::canteen::FromElement for Day {
 }
 
 impl Update for Day {
-    type Err = ovgu::Error;
+    type Err = Error;
     fn update(&mut self, from: &Self) -> Result<(), Self::Err> {
         for meal in from.meals.iter() {
             if match self.meals.iter_mut().find(|m| *m == meal) {

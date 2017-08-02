@@ -20,7 +20,7 @@ extern crate ovgu_canteen;
 extern crate chrono;
 
 use chrono::TimeZone;
-use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
+use ovgu_canteen::{Canteen, CanteenDescription};
 
 #[test]
 fn canteen_upstairs() {
@@ -29,7 +29,8 @@ fn canteen_upstairs() {
     canteen.update().unwrap();
 
     assert_eq!(canteen.description, CanteenDescription::Upstairs);
-    assert!(canteen.days.len() > 0);
+    // this is 0 during holidays
+    //assert!(canteen.days.len() > 0);
 
     for day in canteen.days {
         // this is not quite correct as the local timezone may not be summer time aware MEZ

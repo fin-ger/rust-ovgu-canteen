@@ -16,15 +16,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+use {Day, Error, FromElement, Update};
 use futures::Stream;
 use futures::future::Future;
 use hyper;
 use hyper_openssl;
 use num_cpus;
 use openssl;
-use ovgu;
-use ovgu::canteen::FromElement;
-use ovgu::canteen::Update;
 use scraper;
 use std;
 use std::clone::Clone;
@@ -37,7 +35,7 @@ pub struct Canteen {
     pub description: CanteenDescription,
 
     /// All available days holding the meals for this canteen.
-    pub days: Vec<ovgu::canteen::Day>,
+    pub days: Vec<Day>,
 }
 
 /// This enum identifies a canteen.
@@ -62,12 +60,12 @@ impl Canteen {
     /// Create a new canteen:
     ///
     /// ```
-    /// use ovgu_canteen::ovgu::canteen::{Canteen, CanteenDescription};
+    /// use ovgu_canteen::{Canteen, CanteenDescription};
     ///
     /// let canteen = Canteen::new(CanteenDescription::Downstairs).unwrap();
     /// println!("{}", canteen.days[0].meals[0].name);
     /// ```
-    pub fn new(desc: CanteenDescription) -> Result<Self, ovgu::Error> {
+    pub fn new(desc: CanteenDescription) -> Result<Self, Error> {
         let days = Self::load(desc.clone())?;
         Ok(Canteen {
             description: desc,
@@ -76,7 +74,7 @@ impl Canteen {
     }
 
     /// This method updates the canteen from the website.
-    pub fn update(&mut self) -> Result<(), ovgu::Error> {
+    pub fn update(&mut self) -> Result<(), Error> {
         let days = Self::load(self.description.clone())?;
 
         for day in days.iter() {
@@ -95,14 +93,14 @@ impl Canteen {
         Ok(())
     }
 
-    fn load(desc: CanteenDescription) -> Result<Vec<ovgu::canteen::Day>, ovgu::Error> {
+    fn load(desc: CanteenDescription) -> Result<Vec<Day>, Error> {
         let mut core = Core::new().map_err(|e| {
-            ovgu::Error::Creation("Core", "tokio-core".to_owned(), Some(Box::new(e)))
+            Error::Creation("Core", "tokio-core".to_owned(), Some(Box::new(e)))
         })?;
 
         let connector = hyper_openssl::HttpsConnector::new(num_cpus::get(), &core.handle())
             .map_err(|e: openssl::error::ErrorStack| {
-                ovgu::Error::Creation("HttpsConnector", "connector".to_owned(), Some(Box::new(e)))
+                Error::Creation("HttpsConnector", "connector".to_owned(), Some(Box::new(e)))
             })?;
         let client = hyper::Client::configure().connector(connector).build(
             &core.handle(),
@@ -113,21 +111,21 @@ impl Canteen {
             CanteenDescription::Upstairs => ovgu_canteen_url![upstairs],
         }.parse()
             .map_err(|e: hyper::error::UriError| {
-                ovgu::Error::Creation("parse", "uri".to_owned(), Some(Box::new(e)))
+                Error::Creation("parse", "uri".to_owned(), Some(Box::new(e)))
             })?;
 
         let work = client.get(uri).and_then(|res| res.body().concat2());
         let chunks = core.run(work).map_err(|e| {
-            ovgu::Error::Creation("get", "body".to_owned(), Some(Box::new(e)))
+            Error::Creation("get", "body".to_owned(), Some(Box::new(e)))
         })?;
         let body = std::str::from_utf8(&chunks).map_err(|e| {
-            ovgu::Error::Creation("body", "chunks".to_owned(), Some(Box::new(e)))
+            Error::Creation("body", "chunks".to_owned(), Some(Box::new(e)))
         })?;
 
         scraper::Html::parse_document(&body)
             .select(&ovgu_canteen_selector![day])
-            .map(|day_node| ovgu::canteen::Day::from_element(&day_node))
-            .collect::<Result<Vec<ovgu::canteen::Day>, ovgu::Error>>()
+            .map(|day_node| Day::from_element(&day_node))
+            .collect::<Result<Vec<Day>, Error>>()
     }
 }
 

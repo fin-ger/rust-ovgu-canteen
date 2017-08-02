@@ -30,7 +30,28 @@ extern crate openssl;
 extern crate futures;
 
 #[macro_use]
-pub mod ovgu;
+mod constants;
+
+mod additive;
+mod allergenic;
+mod symbol;
+mod price;
+mod meal;
+mod day;
+mod canteen;
+mod traits;
+mod error;
+
+pub use self::additive::Additive;
+pub use self::allergenic::Allergenic;
+pub use self::canteen::{Canteen, CanteenDescription};
+pub use self::day::Day;
+pub use self::error::Error;
+pub use self::meal::Meal;
+pub use self::price::Price;
+pub use self::symbol::Symbol;
+pub use self::traits::FromElement;
+pub use self::traits::Update;
 
 #[cfg(test)]
 mod tests;

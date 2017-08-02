@@ -32,7 +32,7 @@ pub enum Error {
     /// # Examples
     ///
     /// ```
-    /// use ovgu_canteen::ovgu::Error;
+    /// use ovgu_canteen::Error;
     ///
     /// let data = String::from("five");
     /// let number = match data.as_str()
@@ -52,7 +52,7 @@ pub enum Error {
     /// # Examples
     ///
     /// ```
-    /// use ovgu_canteen::ovgu::Error;
+    /// use ovgu_canteen::Error;
     ///
     /// let data = ["foo"];
     /// let mut iter = data.iter();
@@ -69,7 +69,7 @@ pub enum Error {
     /// # Examples
     ///
     /// ```
-    /// use ovgu_canteen::ovgu::Error;
+    /// use ovgu_canteen::Error;
     ///
     /// let data = String::from("42");
     /// let number = data.parse::<f32>()

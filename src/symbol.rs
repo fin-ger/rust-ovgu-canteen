@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use ovgu;
+use Error;
 use std;
 
 /// This enum represents symbols a meal is annotated with.
@@ -40,7 +40,7 @@ pub enum Symbol {
 }
 
 impl std::str::FromStr for Symbol {
-    type Err = ovgu::Error;
+    type Err = Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "Symbol Schwein" => Ok(Symbol::Pig),
@@ -57,7 +57,7 @@ impl std::str::FromStr for Symbol {
             "Symbol MensaVital" => Ok(Symbol::MensaVital),
             "Symbol Knoblauch" => Ok(Symbol::Garlic),
             "Symbol artgerechte Tierhaltung" => Ok(Symbol::AnimalWelfare),
-            _ => Err(ovgu::Error::Creation("symbol", s.to_owned(), None)),
+            _ => Err(Error::Creation("symbol", s.to_owned(), None)),
         }
     }
 }

@@ -16,8 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use ovgu;
-use ovgu::canteen::Update;
+use {Error, Update};
 use std;
 
 /// This struct represents the price of a meal.
@@ -34,39 +33,39 @@ pub struct Price {
 }
 
 impl std::str::FromStr for Price {
-    type Err = ovgu::Error;
+    type Err = Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let replaced = str::replace(s, ",", ".");
         let mut split = replaced.split(" | ");
 
         let price_student = split
             .next()
-            .ok_or(ovgu::Error::NotAvailable("price", "student", None))
+            .ok_or(Error::NotAvailable("price", "student", None))
             .and_then(|num| {
                 num.parse::<f32>().map_err(|e| {
-                    ovgu::Error::InvalidValue("price", "student", Some(Box::new(e)))
+                    Error::InvalidValue("price", "student", Some(Box::new(e)))
                 })
             })?;
 
         let price_staff = split
             .next()
-            .ok_or(ovgu::Error::NotAvailable("price", "staff", None))
+            .ok_or(Error::NotAvailable("price", "staff", None))
             .and_then(|num| {
                 num.parse::<f32>().map_err(|e| {
-                    ovgu::Error::InvalidValue("price", "staff", Some(Box::new(e)))
+                    Error::InvalidValue("price", "staff", Some(Box::new(e)))
                 })
             })?;
 
         let price_guest = split
             .next()
-            .ok_or(ovgu::Error::NotAvailable("price", "guest", None))
+            .ok_or(Error::NotAvailable("price", "guest", None))
             .and_then(|num| {
                 num.parse::<f32>().map_err(|e| {
-                    ovgu::Error::InvalidValue("price", "guest", Some(Box::new(e)))
+                    Error::InvalidValue("price", "guest", Some(Box::new(e)))
                 })
             })?;
 
-        Ok(ovgu::canteen::Price {
+        Ok(Price {
             student: price_student,
             staff: price_staff,
             guest: price_guest,
@@ -75,7 +74,7 @@ impl std::str::FromStr for Price {
 }
 
 impl Update for Price {
-    type Err = ovgu::Error;
+    type Err = Error;
     fn update(&mut self, from: &Self) -> Result<(), Self::Err> {
         self.student = from.student;
         self.staff = from.staff;
