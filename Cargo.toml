@@ -26,6 +26,12 @@ futures = "^0"
 [dev-dependencies]
 serde_json = "^1"
 
+[badges]
+travis-ci = { repository = "https://github.com/fin-ger/rust-ovgu-canteen/", branch = "master" }
+
+[package.metadata.docs.rs]
+all-features = true
+
 [lib]
 test = true
 doctest = true
