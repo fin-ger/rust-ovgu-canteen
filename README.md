@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/fin-ger/rust-ovgu-canteen.svg?branch=master)](https://travis-ci.org/fin-ger/rust-ovgu-canteen)
 [![Documentation](https://docs.rs/ovgu-canteen/badge.svg)](https://docs.rs/ovgu-canteen/)
 [![Homepage](https://img.shields.io/badge/github.io-homepage-blue.svg)](https://fin-ger.github.io/rust-ovgu-canteen/)
+[![Built with Spacemacs](https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg)](http://spacemacs.org)
 
 This library parses the meals from the Otto-von-Guericke University canteen website.
 
