@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use crate::Error;
+use crate::{Error, IdentifierKind};
 use serde::{Serialize, Deserialize};
 use std;
 
@@ -61,7 +61,10 @@ impl std::str::FromStr for Additive {
             "(8)" => Ok(Additive::Phosphates),
             "(9)" => Ok(Additive::Sweetener),
             "(10)" => Ok(Additive::Phenylalanine),
-            _ => Err(Error::Creation("additive", s.to_owned(), None)),
+            _ => Err(Error::InvalidIdentifier {
+                kind: IdentifierKind::Additive,
+                name: s.to_owned(),
+            }),
         }
     }
 }

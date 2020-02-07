@@ -72,14 +72,14 @@ impl FromElement for Meal {
             .select(&ovgu_canteen_selector![name])
             .next()
             .and_then(|node| node.text().next())
-            .ok_or(Error::NotAvailable("name", "meal", None))
+            .ok_or(Error::NotAvailable { member: "name", object: "meal" })
             .map(|n| n.trim())?;
 
         let price = meal_node
             .select(&ovgu_canteen_selector![price])
             .next()
             .and_then(|node| node.text().last())
-            .ok_or(Error::NotAvailable("price", "meal", None))
+            .ok_or(Error::NotAvailable { member: "price", object: "meal" })
             .and_then(|p| Price::from_str(p.trim()))?;
 
         let symbols = meal_node
@@ -87,7 +87,7 @@ impl FromElement for Meal {
             .map(|img| {
                 img.value()
                     .attr("title")
-                    .ok_or(Error::NotAvailable("title", "symbol img tag", None))
+                    .ok_or(Error::NotAvailable { member: "symbols", object: "meal" })
                     .and_then(|t| Symbol::from_str(t.trim()))
             })
             .collect::<Result<Vec<Symbol>, Error>>()?;

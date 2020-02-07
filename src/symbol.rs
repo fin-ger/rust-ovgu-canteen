@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use crate::Error;
+use crate::{Error, IdentifierKind};
 use serde::{Serialize, Deserialize};
 use std;
 
@@ -58,7 +58,10 @@ impl std::str::FromStr for Symbol {
             "Symbol MensaVital" => Ok(Symbol::MensaVital),
             "Symbol Knoblauch" => Ok(Symbol::Garlic),
             "Symbol artgerechte Tierhaltung" => Ok(Symbol::AnimalWelfare),
-            _ => Err(Error::Creation("symbol", s.to_owned(), None)),
+            _ => Err(Error::InvalidIdentifier {
+                kind: IdentifierKind::Symbol,
+                name: s.to_owned(),
+            }),
         }
     }
 }

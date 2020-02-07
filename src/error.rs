@@ -16,8 +16,53 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use std;
+use failure::Fail;
+use derive_more::Display;
 
+#[derive(Display, Debug)]
+pub enum IdentifierKind {
+    #[display(fmt = "additive")]
+    Additive,
+    #[display(fmt = "allergenic")]
+    Allergenic,
+    #[display(fmt = "symbol")]
+    Symbol,
+}
+
+#[derive(Debug, Fail)]
+pub enum Error {
+    #[fail(display = "Fetch failed for '{}'", url)]
+    Fetch {
+        url: String,
+        #[fail(cause)]
+        cause: hyper::Error,
+    },
+    #[fail(display = "Response from webserver contains invalid UTF-8")]
+    ResponseEncoding {
+        #[fail(cause)]
+        cause: std::str::Utf8Error,
+    },
+    #[fail(display = "Identifier for {} with name '{}' is not known! This is a bug in rust-ovgu-canteen. Please file an issue on github: https://github.com/fin-ger/rust-ovgu-canteen/issues", kind, name)]
+    InvalidIdentifier {
+        kind: IdentifierKind,
+        name: String,
+    },
+    #[fail(display = "Could not retrieve information needed to construct '{}' for type '{}'!", member, object)]
+    NotAvailable {
+        object: &'static str,
+        member: &'static str,
+    },
+    #[fail(display = "Could not parse value for '{}' in type '{}'!", member, object)]
+    InvalidValue {
+        object: &'static str,
+        member: &'static str,
+        #[fail(cause)]
+        cause: Box<dyn Fail>,
+    },
+}
+
+
+/*
 /// The `Error` enum represents several different error types that are used
 /// by results in this crate.
 #[derive(Debug)]
@@ -130,3 +175,4 @@ impl std::error::Error for Error {
         }
     }
 }
+*/

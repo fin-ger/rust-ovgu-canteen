@@ -96,24 +96,20 @@ impl Canteen {
         let connector = hyper_tls::HttpsConnector::new();
         let client = hyper::Client::builder().build::<_, hyper::Body>(connector);
 
-        let uri = match desc {
+        let url = match desc {
             CanteenDescription::Downstairs => ovgu_canteen_url![downstairs],
             CanteenDescription::Upstairs => ovgu_canteen_url![upstairs],
-        }.parse()
-            .map_err(|e| {
-                Error::Creation("parse", "uri".to_owned(), Some(Box::new(e)))
-            })?;
+        };
+        // this can't fail as it is based on a constant defined in this crate
+        let uri = url.parse().unwrap();
 
-        let mut resp = client.get(uri).await.map_err(|e| {
-            Error::Creation("resp", "parse".to_owned(), Some(Box::new(e)))
-        })?;
-        let chunks: Vec<_> = resp.body_mut().try_collect().await.map_err(|e| {
-            Error::Creation("chunks", "resp".to_owned(), Some(Box::new(e)))
-        })?;
+        let mut resp = client.get(uri).await
+            .map_err(|cause| Error::Fetch { url: url.to_string(), cause })?;
+        let chunks: Vec<_> = resp.body_mut().try_collect().await
+            .map_err(|cause| Error::Fetch { url: url.to_string(), cause })?;
         let bytes = chunks.concat();
-        let body = std::str::from_utf8(&bytes).map_err(|e| {
-            Error::Creation("body", "chunks".to_owned(), Some(Box::new(e)))
-        })?;
+        let body = std::str::from_utf8(&bytes)
+            .map_err(|cause| Error::ResponseEncoding { cause })?;
 
         scraper::Html::parse_document(&body)
             .select(&ovgu_canteen_selector![day])

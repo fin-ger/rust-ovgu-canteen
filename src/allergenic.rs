@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use crate::Error;
+use crate::{Error, IdentifierKind};
 use serde::{Serialize, Deserialize};
 use std;
 
@@ -84,7 +84,10 @@ impl std::str::FromStr for Allergenic {
             "(l)" => Ok(Allergenic::Sulphite),
             "(m)" => Ok(Allergenic::Lupin),
             "(n)" => Ok(Allergenic::Mollusc),
-            _ => Err(Error::Creation("allergenic", s.to_owned(), None)),
+            _ => Err(Error::InvalidIdentifier {
+                kind: IdentifierKind::Allergenic,
+                name: s.to_owned(),
+            }),
         }
     }
 }

@@ -41,28 +41,34 @@ impl std::str::FromStr for Price {
 
         let price_student = split
             .next()
-            .ok_or(Error::NotAvailable("price", "student", None))
+            .ok_or(Error::NotAvailable { object: "price", member: "student" })
             .and_then(|num| {
-                num.parse::<f32>().map_err(|e| {
-                    Error::InvalidValue("price", "student", Some(Box::new(e)))
+                num.parse::<f32>().map_err(|e| Error::InvalidValue {
+                    object: "price",
+                    member: "student",
+                    cause: Box::new(e),
                 })
             })?;
 
         let price_staff = split
             .next()
-            .ok_or(Error::NotAvailable("price", "staff", None))
+            .ok_or(Error::NotAvailable { object: "price", member: "staff" })
             .and_then(|num| {
-                num.parse::<f32>().map_err(|e| {
-                    Error::InvalidValue("price", "staff", Some(Box::new(e)))
+                num.parse::<f32>().map_err(|e| Error::InvalidValue {
+                    object: "price",
+                    member: "staff",
+                    cause: Box::new(e),
                 })
             })?;
 
         let price_guest = split
             .next()
-            .ok_or(Error::NotAvailable("price", "guest", None))
+            .ok_or(Error::NotAvailable { object: "price", member: "guest" })
             .and_then(|num| {
-                num.parse::<f32>().map_err(|e| {
-                    Error::InvalidValue("price", "guest", Some(Box::new(e)))
+                num.parse::<f32>().map_err(|e| Error::InvalidValue {
+                    object: "price",
+                    member: "guest",
+                    cause: Box::new(e),
                 })
             })?;
 

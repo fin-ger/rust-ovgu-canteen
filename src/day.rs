@@ -41,10 +41,14 @@ impl FromElement for Day {
             .select(&ovgu_canteen_selector![date])
             .next()
             .and_then(|node| node.text().next())
-            .ok_or(Error::NotAvailable("date", "day", None))
+            .ok_or(Error::NotAvailable { member: "date", object: "day" })
             .and_then(|date_str| {
                 chrono::NaiveDate::parse_from_str(&date_str[date_str.len() - 10..], "%d.%m.%Y")
-                    .map_err(|e| Error::InvalidValue("date", "day", Some(Box::new(e))))
+                    .map_err(|e| Error::InvalidValue {
+                        member: "date",
+                        object: "day",
+                        cause: Box::new(e),
+                    })
             })?;
 
         // we create meals from a given html node
@@ -60,7 +64,7 @@ impl FromElement for Day {
             .select(&ovgu_canteen_selector![side_dishes])
             .next()
             .and_then(|node| node.text().next())
-            .ok_or(Error::NotAvailable("side_dishes", "day", None))
+            .ok_or(Error::NotAvailable { member: "side_dishes", object: "day" })
             .map(|side_dishes_str| {
                 side_dishes_str[10..]
                     .trim()

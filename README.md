@@ -8,6 +8,8 @@
 
 This library parses the meals from the Otto-von-Guericke University canteen website.
 
+> Note: This library uses async/await. In order to work properly, the [`tokio`](https://tokio.rs/) runtime must be used. I'm sorry but `async-std` wont work 😢
+
 ## Usage
 
 Put this in your `Cargo.toml`:
@@ -15,12 +17,6 @@ Put this in your `Cargo.toml`:
 ```toml
 [dependencies]
 ovgu_canteen = "^0"
-```
-
-Then put this in your crate root:
-
-```rust
-extern crate ovgu_canteen;
 ```
 
 ## How to Run the Examples
