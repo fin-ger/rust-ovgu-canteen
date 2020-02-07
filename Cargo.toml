@@ -10,22 +10,19 @@ readme = "README.md"
 keywords = ["ovgu", "canteen", "mensa"]
 categories = ["parsing"]
 license = "GPL-3.0"
+edition = "2018"
 
 [dependencies]
 scraper = "^0"
 hyper = "^0"
-hyper-openssl = "^0"
-tokio-core = "^0"
+hyper-tls = "^0"
 chrono = { version = "^0", features = ["serde"] }
-serde = "^1"
-serde_derive = "^1"
-num_cpus = "^0"
-openssl = "^0"
+serde = { version = "^1", features = ["derive"] }
 futures = "^0"
 
 [dev-dependencies]
 serde_json = "^1"
-
+tokio = { version = "0.2", features = ["full"] }
 [badges]
 travis-ci = { repository = "https://github.com/fin-ger/rust-ovgu-canteen/", branch = "master" }
 
@@ -52,9 +49,4 @@ debug-assertions = false
 [profile.test]
 opt-level = 3
 debug = true
-debug-assertions = false
-
-[profile.doc]
-opt-level = 3
-debug = false
 debug-assertions = false

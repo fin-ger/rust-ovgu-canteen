@@ -21,10 +21,11 @@ extern crate serde_json;
 
 use ovgu_canteen::{Canteen, CanteenDescription};
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let canteens = vec![
-        Canteen::new(CanteenDescription::Downstairs).unwrap(),
-        Canteen::new(CanteenDescription::Upstairs).unwrap(),
+        Canteen::new(CanteenDescription::Downstairs).await.unwrap(),
+        Canteen::new(CanteenDescription::Upstairs).await.unwrap(),
     ];
 
     serde_json::to_writer_pretty(&mut std::io::stdout(), &canteens).unwrap();

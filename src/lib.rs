@@ -17,19 +17,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #[macro_use]
-extern crate serde_derive;
-
-extern crate hyper;
-extern crate hyper_openssl;
-extern crate tokio_core;
-extern crate scraper;
-extern crate chrono;
-extern crate serde;
-extern crate num_cpus;
-extern crate openssl;
-extern crate futures;
-
-#[macro_use]
 mod constants;
 
 mod additive;

@@ -41,7 +41,7 @@ pub enum Error {
     ///     _ => Err(Error::Creation("number", data, None)),
     /// };
     /// ```
-    Creation(&'static str, String, Option<Box<std::error::Error>>),
+    Creation(&'static str, String, Option<Box<dyn std::error::Error>>),
 
     /// This error is used when something is not available or cannot be found.
     ///
@@ -58,7 +58,7 @@ pub enum Error {
     /// let mut iter = data.iter();
     /// let result = iter.next().ok_or(Error::NotAvailable("result", "foo", None));
     /// ```
-    NotAvailable(&'static str, &'static str, Option<Box<std::error::Error>>),
+    NotAvailable(&'static str, &'static str, Option<Box<dyn std::error::Error>>),
 
     /// This error is used when invalid data got passed.
     ///
@@ -75,7 +75,7 @@ pub enum Error {
     /// let number = data.parse::<f32>()
     ///     .map_err(|e| Error::InvalidValue("number", "data", Some(Box::new(e))));
     /// ```
-    InvalidValue(&'static str, &'static str, Option<Box<std::error::Error>>),
+    InvalidValue(&'static str, &'static str, Option<Box<dyn std::error::Error>>),
 }
 
 impl std::fmt::Display for Error {

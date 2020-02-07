@@ -18,7 +18,7 @@
 
 //! This module contains unit tests for `ovgu::canteen::Symbol`.
 
-use Symbol;
+use crate::Symbol;
 use std::str::FromStr;
 
 #[test]

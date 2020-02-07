@@ -16,17 +16,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use {Day, Error, FromElement, Update};
-use futures::Stream;
-use futures::future::Future;
+use crate::{Day, Error, FromElement, Update};
+use serde::{Serialize, Deserialize};
+use futures::TryStreamExt;
 use hyper;
-use hyper_openssl;
-use num_cpus;
-use openssl;
+use hyper_tls;
 use scraper;
 use std;
 use std::clone::Clone;
-use tokio_core::reactor::Core;
 
 /// A canteen holds all the meals on all available days.
 #[derive(Serialize, Deserialize, Debug)]
@@ -61,12 +58,14 @@ impl Canteen {
     ///
     /// ```
     /// use ovgu_canteen::{Canteen, CanteenDescription};
-    ///
-    /// let canteen = Canteen::new(CanteenDescription::Downstairs).unwrap();
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// let canteen = Canteen::new(CanteenDescription::Downstairs).await.unwrap();
     /// println!("{}", canteen.days[0].meals[0].name);
+    /// # }
     /// ```
-    pub fn new(desc: CanteenDescription) -> Result<Self, Error> {
-        let days = Self::load(desc.clone())?;
+    pub async fn new(desc: CanteenDescription) -> Result<Self, Error> {
+        let days = Self::load(desc.clone()).await?;
         Ok(Canteen {
             description: desc,
             days: days,
@@ -74,8 +73,8 @@ impl Canteen {
     }
 
     /// This method updates the canteen from the website.
-    pub fn update(&mut self) -> Result<(), Error> {
-        let days = Self::load(self.description.clone())?;
+    pub async fn update(&mut self) -> Result<(), Error> {
+        let days = Self::load(self.description.clone()).await?;
 
         for day in days.iter() {
             if match self.days.iter_mut().find(|d| *d == day) {
@@ -93,32 +92,26 @@ impl Canteen {
         Ok(())
     }
 
-    fn load(desc: CanteenDescription) -> Result<Vec<Day>, Error> {
-        let mut core = Core::new().map_err(|e| {
-            Error::Creation("Core", "tokio-core".to_owned(), Some(Box::new(e)))
-        })?;
-
-        let connector = hyper_openssl::HttpsConnector::new(num_cpus::get(), &core.handle())
-            .map_err(|e: openssl::error::ErrorStack| {
-                Error::Creation("HttpsConnector", "connector".to_owned(), Some(Box::new(e)))
-            })?;
-        let client = hyper::Client::configure().connector(connector).build(
-            &core.handle(),
-        );
+    async fn load(desc: CanteenDescription) -> Result<Vec<Day>, Error> {
+        let connector = hyper_tls::HttpsConnector::new();
+        let client = hyper::Client::builder().build::<_, hyper::Body>(connector);
 
         let uri = match desc {
             CanteenDescription::Downstairs => ovgu_canteen_url![downstairs],
             CanteenDescription::Upstairs => ovgu_canteen_url![upstairs],
         }.parse()
-            .map_err(|e: hyper::error::UriError| {
+            .map_err(|e| {
                 Error::Creation("parse", "uri".to_owned(), Some(Box::new(e)))
             })?;
 
-        let work = client.get(uri).and_then(|res| res.body().concat2());
-        let chunks = core.run(work).map_err(|e| {
-            Error::Creation("get", "body".to_owned(), Some(Box::new(e)))
+        let mut resp = client.get(uri).await.map_err(|e| {
+            Error::Creation("resp", "parse".to_owned(), Some(Box::new(e)))
         })?;
-        let body = std::str::from_utf8(&chunks).map_err(|e| {
+        let chunks: Vec<_> = resp.body_mut().try_collect().await.map_err(|e| {
+            Error::Creation("chunks", "resp".to_owned(), Some(Box::new(e)))
+        })?;
+        let bytes = chunks.concat();
+        let body = std::str::from_utf8(&bytes).map_err(|e| {
             Error::Creation("body", "chunks".to_owned(), Some(Box::new(e)))
         })?;
 

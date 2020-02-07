@@ -18,7 +18,7 @@
 
 //! This module contains unit tests for `ovgu::canteen::Allergenic`.
 
-use Allergenic;
+use crate::Allergenic;
 use std::str::FromStr;
 
 #[test]

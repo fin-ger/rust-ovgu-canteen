@@ -16,7 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use {Error, FromElement, Meal, Update};
+use crate::{Error, FromElement, Meal, Update};
+use serde::{Serialize, Deserialize};
 use chrono;
 use scraper;
 

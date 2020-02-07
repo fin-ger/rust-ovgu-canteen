@@ -18,7 +18,7 @@
 
 //! This module contains unit tests for `ovgu::canteen::Price`.
 
-use Price;
+use crate::Price;
 use std::str::FromStr;
 
 #[test]

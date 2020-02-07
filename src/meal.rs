@@ -16,7 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use {Additive, Allergenic, Error, FromElement, Price, Symbol, Update};
+use crate::{Additive, Allergenic, Error, FromElement, Price, Symbol, Update};
+use serde::{Serialize, Deserialize};
 use scraper;
 use std::str::FromStr;
 

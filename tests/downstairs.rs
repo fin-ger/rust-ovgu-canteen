@@ -22,11 +22,11 @@ extern crate chrono;
 use chrono::TimeZone;
 use ovgu_canteen::{Canteen, CanteenDescription};
 
-#[test]
-fn canteen_downstairs() {
+#[tokio::test]
+async fn canteen_downstairs() {
     // test if parsing is working
-    let mut canteen = Canteen::new(CanteenDescription::Downstairs).unwrap();
-    canteen.update().unwrap();
+    let mut canteen = Canteen::new(CanteenDescription::Downstairs).await.unwrap();
+    canteen.update().await.unwrap();
 
     assert_eq!(canteen.description, CanteenDescription::Downstairs);
     // this is 0 during holidays
