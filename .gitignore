@@ -8,3 +8,4 @@
 
 # Do not commit backup files
 *~
+Cargo.lock
