@@ -68,3 +68,21 @@ impl std::str::FromStr for Additive {
         }
     }
 }
+
+impl Additive {
+    /// Get a german translation of the additive variant.
+    pub fn to_german_str(&self) -> &'static str {
+        match self {
+            Additive::FoodColoring => "Lebensmittelfarbe",
+            Additive::FoodPreservatives => "Konservierungsstoffe",
+            Additive::AntiOxidants => "Antioxidationsmittel",
+            Additive::FlavorEnhancer => "Geschmacksverstärker",
+            Additive::Sulfurized => "geschwefelt",
+            Additive::Waxed => "gewachst",
+            Additive::Blackend => "geschwärzt",
+            Additive::Phosphates => "Phosphate",
+            Additive::Sweetener => "Süßungsmittel",
+            Additive::Phenylalanine => "Phenylalanin",
+        }
+    }
+}

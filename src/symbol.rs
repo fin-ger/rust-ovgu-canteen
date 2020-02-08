@@ -31,7 +31,7 @@ pub enum Symbol {
     Game,
     Lamb,
     Vegan,
-    Bio,
+    Organic,
     Vegetarian,
     Alcohol,
     SoupOfTheDay,
@@ -51,7 +51,7 @@ impl std::str::FromStr for Symbol {
             "Symbol Wild" => Ok(Symbol::Game),
             "Symbol Lamm" => Ok(Symbol::Lamb),
             "Symbol vegan" => Ok(Symbol::Vegan),
-            "Symbol Bio" => Ok(Symbol::Bio),
+            "Symbol Bio" => Ok(Symbol::Organic),
             "Symbol vegetarisch" => Ok(Symbol::Vegetarian),
             "Symbol enth�lt Alkohol" => Ok(Symbol::Alcohol),
             "Symbol Suppe" => Ok(Symbol::SoupOfTheDay),
@@ -62,6 +62,28 @@ impl std::str::FromStr for Symbol {
                 kind: IdentifierKind::Symbol,
                 name: s.to_owned(),
             }),
+        }
+    }
+}
+
+impl Symbol {
+    /// Get a german translation of the symbol variant.
+    pub fn to_german_str(&self) -> &'static str {
+        match self {
+            Symbol::Pig => "Schwein",
+            Symbol::Cattle => "Rind",
+            Symbol::Poultry => "Geflügel",
+            Symbol::Fish => "Fisch",
+            Symbol::Game => "Wild",
+            Symbol::Lamb => "Lamm",
+            Symbol::Vegan => "Vegan",
+            Symbol::Organic => "Bio",
+            Symbol::Vegetarian => "Vegetarisch",
+            Symbol::Alcohol => "Alkohol",
+            Symbol::SoupOfTheDay => "Tagessuppe",
+            Symbol::MensaVital => "MensaVital",
+            Symbol::Garlic => "Knoblauch",
+            Symbol::AnimalWelfare => "artgerechte Tierhaltung",
         }
     }
 }

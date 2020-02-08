@@ -91,3 +91,37 @@ impl std::str::FromStr for Allergenic {
         }
     }
 }
+impl Allergenic {
+    /// Get a german translation of the allergenic variant.
+    pub fn to_german_str(&self) -> &'static str {
+        match self {
+            Allergenic::Wheat => "Weizen",
+            Allergenic::Rye => "Roggen",
+            Allergenic::Barley => "Gerste",
+            Allergenic::Oat => "Hafer",
+            Allergenic::Spelt => "Dinkel",
+            Allergenic::Kamut => "Kamut",
+            Allergenic::Crustacean => "Krustentiere",
+            Allergenic::Egg => "Ei",
+            Allergenic::Fish => "Fisch",
+            Allergenic::Peanut => "Erdnüsse",
+            Allergenic::Soya => "Soja",
+            Allergenic::Lactose => "Laktose",
+            Allergenic::Almond => "Mandel",
+            Allergenic::Hazelnut => "Haselnüsse",
+            Allergenic::Walnut => "Walnüsse",
+            Allergenic::Cashew => "Cashewnüsse",
+            Allergenic::PecanNut => "Pekannüsse",
+            Allergenic::BrazilNut => "Paranüsse",
+            Allergenic::Pistachio => "Pistazie",
+            Allergenic::MacadamiaNut => "Macadamianüsse",
+            Allergenic::QueenslandNut => "Macadamianüsse",
+            Allergenic::Celery => "Sellerie",
+            Allergenic::Mustard => "Senf",
+            Allergenic::Sesame => "Sesam",
+            Allergenic::Sulphite => "Sulfit/Schwefeldioxid",
+            Allergenic::Lupin => "Lupine",
+            Allergenic::Mollusc => "Weichtiere",
+        }
+    }
+}
