@@ -38,11 +38,26 @@ pub struct Canteen {
 /// This enum identifies a canteen.
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub enum CanteenDescription {
-    /// The canteen located downstairs.
-    Downstairs,
+    /// Mensa UniCampus Magdeburg lower hall
+    UniCampusLowerHall,
 
-    /// The canteen located upstairs.
-    Upstairs,
+    /// Mensa UniCampus Magdeburg upper hall
+    UniCampusUpperHall,
+
+    /// Mensa Kellercafé Magdeburg
+    Kellercafe,
+
+    /// Mensa Herrenkrug Magdeburg
+    Herrenkrug,
+
+    /// Mensa Stendal
+    Stendal,
+
+    /// Mensa Wernigerode
+    Wernigerode,
+
+    /// Mensa DomCafete Halberstadt
+    DomCafeteHalberstadt,
 }
 
 impl Canteen {
@@ -60,7 +75,7 @@ impl Canteen {
     /// use ovgu_canteen::{Canteen, CanteenDescription};
     /// # #[tokio::main]
     /// # async fn main() {
-    /// let canteen = Canteen::new(CanteenDescription::Downstairs).await.unwrap();
+    /// let canteen = Canteen::new(CanteenDescription::UniCampusLowerHall).await.unwrap();
     /// println!("{}", canteen.days[0].meals[0].name);
     /// # }
     /// ```
@@ -97,8 +112,13 @@ impl Canteen {
         let client = hyper::Client::builder().build::<_, hyper::Body>(connector);
 
         let url = match desc {
-            CanteenDescription::Downstairs => ovgu_canteen_url![downstairs],
-            CanteenDescription::Upstairs => ovgu_canteen_url![upstairs],
+            CanteenDescription::UniCampusLowerHall => ovgu_canteen_url![uni_campus_lower_hall],
+            CanteenDescription::UniCampusUpperHall => ovgu_canteen_url![uni_campus_upper_hall],
+            CanteenDescription::Kellercafe => ovgu_canteen_url![kellercafe],
+            CanteenDescription::Herrenkrug => ovgu_canteen_url![herrenkrug],
+            CanteenDescription::Stendal => ovgu_canteen_url![stendal],
+            CanteenDescription::Wernigerode => ovgu_canteen_url![wernigerode],
+            CanteenDescription::DomCafeteHalberstadt => ovgu_canteen_url![dom_cafete_halberstadt],
         };
         // this can't fail as it is based on a constant defined in this crate
         let uri = url.parse().unwrap();

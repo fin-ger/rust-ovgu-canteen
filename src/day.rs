@@ -64,14 +64,14 @@ impl FromElement for Day {
             .select(&ovgu_canteen_selector![side_dishes])
             .next()
             .and_then(|node| node.text().next())
-            .ok_or(Error::NotAvailable { member: "side_dishes", object: "day" })
             .map(|side_dishes_str| {
                 side_dishes_str[10..]
                     .trim()
                     .split(", ")
                     .map(|s| s.to_string())
                     .collect()
-            })?;
+            })
+            .unwrap_or(vec![]);
 
         Ok(Day {
             date: date,

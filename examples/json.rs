@@ -23,10 +23,15 @@ use ovgu_canteen::{Canteen, CanteenDescription};
 
 #[tokio::main]
 async fn main() {
-    let canteens = vec![
-        Canteen::new(CanteenDescription::Downstairs).await.unwrap(),
-        Canteen::new(CanteenDescription::Upstairs).await.unwrap(),
-    ];
+    let canteens = vec![tokio::try_join!(
+        Canteen::new(CanteenDescription::UniCampusLowerHall),
+        Canteen::new(CanteenDescription::UniCampusUpperHall),
+        Canteen::new(CanteenDescription::Kellercafe),
+        Canteen::new(CanteenDescription::Herrenkrug),
+        Canteen::new(CanteenDescription::Stendal),
+        Canteen::new(CanteenDescription::Wernigerode),
+        Canteen::new(CanteenDescription::DomCafeteHalberstadt),
+    ).unwrap()];
 
     serde_json::to_writer_pretty(&mut std::io::stdout(), &canteens).unwrap();
     println!();

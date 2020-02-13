@@ -25,10 +25,10 @@ use ovgu_canteen::{Canteen, CanteenDescription};
 #[tokio::test]
 async fn canteen_upstairs() {
     // test if parsing is working
-    let mut canteen = Canteen::new(CanteenDescription::Upstairs).await.unwrap();
+    let mut canteen = Canteen::new(CanteenDescription::UniCampusUpperHall).await.unwrap();
     canteen.update().await.unwrap();
 
-    assert_eq!(canteen.description, CanteenDescription::Upstairs);
+    assert_eq!(canteen.description, CanteenDescription::UniCampusUpperHall);
     // this is 0 during holidays
     //assert!(canteen.days.len() > 0);
 

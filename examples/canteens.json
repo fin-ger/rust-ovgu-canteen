@@ -1,6 +1,6 @@
 [
   {
-    "description": "Downstairs",
+    "description": "UniCampusLowerHall",
     "days": [
       {
         "date": "2017-05-17",
@@ -34,7 +34,7 @@
     ]
   },
   {
-    "description": "Upstairs",
+    "description": "UniCampusUpperHall",
     "days": [
       {
         "date": "2017-05-17",

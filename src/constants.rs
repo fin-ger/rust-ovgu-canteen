@@ -24,8 +24,13 @@ macro_rules! base_url {
 
 #[macro_export]
 macro_rules! ovgu_canteen_url {
-    [downstairs] => ( base_url!["mensa-unicampus/speiseplan-unten/"] );
-    [upstairs] => ( base_url!["mensa-unicampus/speiseplan-oben/"] );
+    [uni_campus_lower_hall] => ( base_url!["mensa-unicampus/speiseplan-unten/"] );
+    [uni_campus_upper_hall] => ( base_url!["mensa-unicampus/speiseplan-oben/"] );
+    [kellercafe] => ( base_url!["mensa-kellercafe/speiseplan/"] );
+    [herrenkrug] => ( base_url!["mensa-herrenkrug/speiseplan/"] );
+    [stendal] => ( base_url!["mensa-stendal/speiseplan/"] );
+    [wernigerode] => ( base_url!["mensa-wernigerode/speiseplan/"] );
+    [dom_cafete_halberstadt] => ( base_url!["mensa-halberstadt/speiseplan/"] );
 }
 
 macro_rules! parse_and_unwrap_selector {
@@ -36,7 +41,7 @@ macro_rules! parse_and_unwrap_selector {
 macro_rules! ovgu_canteen_selector {
     [day] => ( parse_and_unwrap_selector!(".mensa > table") );
     [date] => ( parse_and_unwrap_selector!("thead > tr > td") );
-    [side_dishes] => ( parse_and_unwrap_selector!("tbody > tr:last-of-type > td") );
+    [side_dishes] => ( parse_and_unwrap_selector!("tbody > tr:last-of-type > td[colspan=\"3\"]") );
     [meal] => ( parse_and_unwrap_selector!("tbody > tr:not(:last-of-type)") );
     [name] => ( parse_and_unwrap_selector!("td:nth-of-type(1) > strong") );
     [price] => ( parse_and_unwrap_selector!("td:nth-of-type(1)") );

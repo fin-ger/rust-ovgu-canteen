@@ -6,7 +6,7 @@
 [![Homepage](https://img.shields.io/badge/github.io-homepage-blue.svg)](https://fin-ger.github.io/rust-ovgu-canteen/)
 [![Built with Spacemacs](https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg)](http://spacemacs.org)
 
-This library parses the meals from the Otto-von-Guericke University canteen website.
+This library parses the meals from the Studentenwerk Magdeburg canteen website.
 
 > Note: This library uses async/await. In order to work properly, the [`tokio`](https://tokio.rs/) runtime must be used. I'm sorry but `async-std` wont work 😢
 
