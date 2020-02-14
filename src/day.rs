@@ -52,13 +52,13 @@ impl FromElement for Day {
             })?;
 
         // we create meals from a given html node
-        // then we collect an Iter<Result<Meal, Err>> into a Result<Vec<Meal>, Err>
-        //  -> collect checks if any of the results failed
-        //  -> therefore we can use ? on the collected Vec
         let meals = day_node
             .select(&ovgu_canteen_selector![meal])
             .map(|meal_node| Meal::from_element(&meal_node))
-            .collect::<Result<Vec<Meal>, Error>>()?;
+            // if a meal creation failed, skip it
+            // it is most likely a side-dish
+            .filter_map(|res| res.ok())
+            .collect::<Vec<Meal>>();
 
         let side_dishes = day_node
             .select(&ovgu_canteen_selector![side_dishes])

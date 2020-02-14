@@ -42,7 +42,7 @@ macro_rules! ovgu_canteen_selector {
     [day] => ( parse_and_unwrap_selector!(".mensa > table") );
     [date] => ( parse_and_unwrap_selector!("thead > tr > td") );
     [side_dishes] => ( parse_and_unwrap_selector!("tbody > tr:last-of-type > td[colspan=\"3\"]") );
-    [meal] => ( parse_and_unwrap_selector!("tbody > tr:not(:last-of-type)") );
+    [meal] => ( parse_and_unwrap_selector!("tbody > tr") );
     [name] => ( parse_and_unwrap_selector!("td:nth-of-type(1) > strong") );
     [price] => ( parse_and_unwrap_selector!("td:nth-of-type(1)") );
     [symbols] => ( parse_and_unwrap_selector!("td:nth-of-type(2) > div > img") );
