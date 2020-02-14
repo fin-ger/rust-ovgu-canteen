@@ -1,6 +1,6 @@
 [package]
 name = "ovgu-canteen"
-version = "0.3.1-alpha.0"
+version = "0.3.1"
 authors = ["Fin Christensen"]
 description = "A canteen parser library for the Otto-von-Guericke University Magdeburg."
 documentation = "https://docs.rs/ovgu-canteen/"
