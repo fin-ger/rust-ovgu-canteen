@@ -36,7 +36,7 @@ pub struct Canteen {
 }
 
 /// This enum identifies a canteen.
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Hash, Eq, Clone)]
 pub enum CanteenDescription {
     /// Mensa UniCampus Magdeburg lower hall
     UniCampusLowerHall,
@@ -58,6 +58,21 @@ pub enum CanteenDescription {
 
     /// Mensa DomCafete Halberstadt
     DomCafeteHalberstadt,
+}
+
+impl CanteenDescription {
+    /// Get a german translation of the canteen description.
+    pub fn to_german_str(&self) -> &'static str {
+        match self {
+            Self::UniCampusLowerHall => "UniCampus Magdeburg Unterer Saal",
+            Self::UniCampusUpperHall => "UniCampus Magdeburg Oberer Saal",
+            Self::Kellercafe => "Kellercafé Magdeburg",
+            Self::Herrenkrug => "Herrenkrug Magdeburg",
+            Self::Stendal => "Stendal",
+            Self::Wernigerode => "Wernigerode",
+            Self::DomCafeteHalberstadt => "DomCafete Halberstadt",
+        }
+    }
 }
 
 impl Canteen {
