@@ -66,24 +66,3 @@ impl std::str::FromStr for Symbol {
     }
 }
 
-impl Symbol {
-    /// Get a german translation of the symbol variant.
-    pub fn to_german_str(&self) -> &'static str {
-        match self {
-            Symbol::Pig => "Schwein",
-            Symbol::Cattle => "Rind",
-            Symbol::Poultry => "Geflügel",
-            Symbol::Fish => "Fisch",
-            Symbol::Game => "Wild",
-            Symbol::Lamb => "Lamm",
-            Symbol::Vegan => "Vegan",
-            Symbol::Organic => "Bio",
-            Symbol::Vegetarian => "Vegetarisch",
-            Symbol::Alcohol => "Alkohol",
-            Symbol::SoupOfTheDay => "Tagessuppe",
-            Symbol::MensaVital => "MensaVital",
-            Symbol::Garlic => "Knoblauch",
-            Symbol::AnimalWelfare => "artgerechte Tierhaltung",
-        }
-    }
-}
