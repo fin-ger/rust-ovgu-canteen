@@ -122,6 +122,8 @@ impl Canteen {
             }
         }
 
+        self.days.sort_by_key(|day| day.date);
+
         Ok(())
     }
 
