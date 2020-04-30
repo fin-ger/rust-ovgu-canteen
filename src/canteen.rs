@@ -91,7 +91,25 @@ impl Canteen {
     pub async fn update(&mut self) -> Result<(), Error> {
         let days = Self::load(self.description.clone()).await?;
 
-        for day in days.iter() {
+        self.merge(Canteen {
+            description: self.description.clone(),
+            days,
+        })
+    }
+
+    /// This method merges this canteen with another canteen.
+    ///
+    /// Both canteens must contain the same description, otherwise a
+    /// `CouldNotMerge` error is given.
+    pub fn merge(&mut self, other: Canteen) -> Result<(), Error> {
+        if self.description != other.description {
+            return Err(Error::CouldNotMerge {
+                us: self.description.clone(),
+                them: other.description,
+            });
+        }
+
+        for day in other.days.iter() {
             if match self.days.iter_mut().find(|d| *d == day) {
                 Some(ref mut d) => {
                     d.update(day)?;

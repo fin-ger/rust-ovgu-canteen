@@ -24,7 +24,7 @@ use scraper;
 /// A `Day` holds all the meals that are available at the given day.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Day {
-    /// The date of thsi day.
+    /// The date of this day.
     pub date: chrono::NaiveDate,
 
     /// The meal available on this day.

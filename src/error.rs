@@ -19,6 +19,8 @@
 use failure::Fail;
 use derive_more::Display;
 
+use crate::CanteenDescription;
+
 #[derive(Display, Debug)]
 pub enum IdentifierKind {
     #[display(fmt = "additive")]
@@ -58,6 +60,11 @@ pub enum Error {
         member: &'static str,
         #[fail(cause)]
         cause: Box<dyn Fail>,
+    },
+    #[fail(display = "Could not merge canteen {:?} with {:?}, as description is not matching!", us, them)]
+    CouldNotMerge {
+        us: CanteenDescription,
+        them: CanteenDescription,
     },
 }
 
